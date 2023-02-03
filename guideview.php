@@ -40,10 +40,11 @@ include("connect.php"); ?>
     <?php
     // echo "hello";
     $group_no = 0;
-    $sql_select = "select max(groupno) from groups";
+    $sql_select = "select max(groupno)+1 from groups";
     $result = mysqli_query($conn, $sql_select);
     while ($data = $result->fetch_assoc()) {
-        $group_no = $data['groupno'] + 1;
+        // echo var_dump($data);
+        $group_no = $data['max(groupno)+1'] ;
         // echo $group_no;
     }
     if (isset($_POST['moodlesubmit'])) {
@@ -54,7 +55,7 @@ include("connect.php"); ?>
 
         $moodle_array = $_POST['moodleid'];
         foreach ($moodle_array as $moodleid) {
-            $sql_insert = "insert into groups(`groupno`,`student_id`,`guide_id`,`title`) values($group_no,$moodleid,$guide_id,$title)";
+            $sql_insert = "insert into groups(`groupno`,`student_id`,`title`) values($group_no,$moodleid,$title)";
 
             $inserted = mysqli_query($conn, $sql_insert);
         }
@@ -64,69 +65,86 @@ include("connect.php"); ?>
     }
 
     ?>
-    <div class="accordion col-md-6 col-xs-12" id="accordionExample">
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingOne">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    Add Groups
-                </button>
-            </h2>
-            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                    <form action=<?php htmlspecialchars($_SERVER['PHP_SELF']) ?> method="POST">
-                        <div class="form-group row">
-                            <div class="col-md-6 col-xs-12">
-                                <label class="control-label"> Group No.</label>
-                            </div>
-                            <div class="col-md-6 col-xs-12">
-                                <label class="control-label"> <?php echo $group_no ?></label>
-                            </div>
 
-                        </div>
-                        <div class="form-group row">
-                            <div class="input-group col-md-6 col-xs-12">
-                                <span class="input-group-text">Project Title</span>
-                                <input type="text" name="title" class="form-control">
-                            </div>
+    <form class="row" action=<?php htmlspecialchars($_SERVER['PHP_SELF']) ?> method="POST">
+        <div class="form-group row">
+            <div class="col-md-6 col-xs-12">
+                <label class="control-label"> Group No.</label>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <label class="control-label"> <?php echo $group_no ?></label>
+            </div>
 
-                        </div>
+        </div>
+        <div class="form-group row">
+            <div class="input-group col-md-6 col-xs-12">
+                <span class="input-group-text">Project Title</span>
+                <input type="text" name="title" class="form-control">
+            </div>
 
-                </div>
-                <div class="form-group row">
-                    <div class="input-group col-md-6 col-xs-12">
-                        <span class="input-group-text">Moodle IDs of members</span>
-                        <input type="text" maxlength="8" name="moodleid[]" class="form-control">
-                        <input type="text" maxlength="8" name="moodleid[]" class="form-control">
-                        <input type="text" maxlength="8" name="moodleid[]" class="form-control">
-                        <input type="text" maxlength="8" name="moodleid[]" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group row">
+        </div>
 
-                    <div class="col-md-6">
-                        <button type="submit" name="moodlesubmit" class="btn btn-primary">Submit</button>
-                    </div>
-                </div>
-                </form>
-
+        </div>
+        <div class="form-group row">
+            <div class="input-group">
+                <span class="input-group-text">Moodle IDs of members</span>
+                <input type="text" maxlength="8" name="moodleid[]" class="form-control">
+                <input type="text" maxlength="8" name="moodleid[]" class="form-control">
+                <input type="text" maxlength="8" name="moodleid[]" class="form-control">
+                <input type="text" maxlength="8" name="moodleid[]" class="form-control">
             </div>
         </div>
+        <div class="form-group row">
+
+            <div class="col-md-6">
+                <button type="submit" name="moodlesubmit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </form>
+
+
+
+    <div>
+
+
+        <table class="table table-bordered border-primary">
+            <tr>
+
+                <th>Group No.</th>
+                <th>Student Id</th>
+                <th>Student Name</th>
+
+                <th>Project Title</th>
+            </tr>
+            <?php
+            $guide_id = "1234567890";
+            $query = "select * from groups where guide_id =$guide_id ";
+            $result = mysqli_query($conn, $query);
+            while ($data = $result->fetch_assoc()) {
+                // echo var_dump($data);
+                $group_no = $data['groupno'];
+                $studentid = $data['student_id'];
+                $title = $data['title'];
+
+                $query2 = "select * from userinfo where username=" . $studentid;
+                $sdata = mysqli_query($conn, $query2)->fetch_assoc();
+
+                $studentname = $sdata['name'];
+                echo "<tr>
+                <td>".$group_no." </td>
+                <td>".$studentid." </td>
+                <td>".$studentname." </td>
+                <td>".$title." </td>
+                </tr>";
+                
+
+            }
+            ?>
+
+
+
+        </table>
     </div>
-
-    </div>
-
-    <table class="table table-bordered border-primary">
-        <tr>
-
-            <th>Group No.</th>
-            <th>Student Name</th>
-
-            <th>Guide Name</th>
-            <th>Project Title</th>
-        </tr>
-
-
-    </table>
 
 
 
