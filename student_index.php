@@ -11,21 +11,6 @@
 <body>
     <?php include('includes/navbar.php')?>
     <?php include('includes/connect.php')?>
-    
-    <?php
-    if (isset($_POST['submit'])){
-        $sem = $_POST['semester'];
-        $groupno= $_POST['groupno'];
-        $logno= $_POST['logno'];
-        $plannedprog= $_POST['plannedprog'];
-        $achievedprog= $_POST['achievedprog'];
-        $date= $_POST['date'];
-
-        $query= "insert into log_content (sem,groupno,log_no,progress_planned,progress_achieved,date) values ('$sem','$groupno','$logno','$plannedprog','$achievedprog','$date')";
-        $result= mysqli_query($conn,$query);
-    };
-    
-    ?>
 
     <div class="container">
     <div class="container my-4">
@@ -89,17 +74,34 @@
         <div class="row g-3 my-3">
           <center>
           <div class="col-sm-6">
-            <button class="btn btn-primary" name="submit" type="submit">Submit</button>
+            <button class="btn btn-primary" name="button_submit" type="submit">Submit</button>
           </div>
           </center>
         </div>
 
+        <?php
+          if (isset($_POST['button_submit'])){
+              $sem = $_POST['semester'];
+              $groupno= $_POST['groupno'];
+              $logno= $_POST['logno'];
+              $plannedprog= $_POST['plannedprog'];
+              $achievedprog= $_POST['achievedprog'];
+              $date= $_POST['date'];
+
+              $query= "insert into log_content (sem,groupno,log_no,progress_planned,progress_achieved,date) values ('$sem','$groupno','$logno','$plannedprog','$achievedprog','$date')";
+              $result= mysqli_query($conn,$query);
+          };
+    
+    ?>
+
       </form>
     </div>
-
+        
+    <hr style="height:2px;border-width:0;color:gray;background-color:gray">
                                 
     <div>
-        <table class="table table-bordered border-primary">
+        <table class="table table-bordered border-secondary">
+          <thead class = "thead-dark">
             <tr>
               <th>Sem</th>
               <th>Group No.</th>
@@ -109,6 +111,7 @@
               <th colspan=2>Guide Review</th>
               <th>Date</th> 
             </tr>
+        </thead>
             <?php
             $groupno = "2";
             $query = "select * from log_content where groupno = $groupno order by 'log_no'";
@@ -136,7 +139,7 @@
     </div>
 
 
-    <hr>
+    <hr style="height:2px;border-width:0;color:gray;background-color:gray">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
 </html>
