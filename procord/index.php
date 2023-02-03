@@ -1,5 +1,11 @@
 <?php
   include("../includes/connect.php");
+  include("../includes/conditions.php");
+  if($_COOKIE["role"] == "proco" || $_COOKIE["role"] == "admin"){
+    $role = $_COOKIE["role"];
+  }else{
+    header("Location: /logbook_online/onlinelogbook/index.php");
+  }
 ?>
 
 <!DOCTYPE html>
@@ -8,7 +14,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Co-ordinator</title>
+    <title>Project Co-ordinator - Home</title>
     <style>
       ::-webkit-calendar-picker-indicator {
       filter: invert(1);
@@ -34,12 +40,13 @@
 
     <?php include('../includes/navbar.php')?>
     
-      <div class="container">
+      <div class="container my-5">
+        <h2>Add Logs for Users:</h2>
       <div class="container my-4">
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="POST">
           <div class="row g-3">
 
-          <div class="col-sm-4">
+          <div class="col-sm-4 col-xs-4">
               <label for="logno" class="form-label">Log Number</label>
               <select class="form-select" id="logno" name="logno" required>
                 <option>1</option>
@@ -52,7 +59,7 @@
               </select>
             </div>
 
-            <div class="col-sm-4">
+            <div class="col-sm-4 col-xs-4">
               <label for="semester" class="form-label">Semester</label>
               <select class="form-select" id="semester" name="semester" required>
                 <option>1</option>
@@ -65,17 +72,17 @@
                 <option>8</option>
               </select>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-4 col-xs-4">
               <label for="semester" class="form-label">Year</label>
               <input class="form-control" name="year" id="year" type="text" placeholder="" readonly>
             </div>
 
           <div class="row g-3 my-1">
-            <div class="col-sm-6">
+            <div class="col-sm-6 col-xs-6">
               <label for="startdate" class="form-label">Example date</label>
               <input type="date" class="bg-dark rounded-3 border border-light form-control " id="startdate" name="startdate" required>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-6 col-xs-6">
               <label for="enddate" class="form-label">Example date</label>
               <input type="date" class="bg-dark rounded-3 border border-light form-control" id="enddate" name="enddate" required>
             </div>
@@ -83,8 +90,8 @@
         </div>
 
           <div class="row g-3 my-2">
-            <div class="col-sm-6">
-              <button class="btn btn-primary" name="submit" type="submit">Submit</button>
+            <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+              <button class="w-100 btn btn-outline-info" name="submit" type="submit">Submit</button>
             </div>
           </div>
 
@@ -94,7 +101,7 @@
       <hr>
 
       <div class="container">
-        <h2>Created Log submission dates</h2>
+        <h2 class="my-4">Previously Created Logs: </h2>
           <?php
             $query= "select * from log_creation";
             $result= mysqli_query($conn,$query);
