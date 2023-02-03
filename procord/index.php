@@ -25,15 +25,18 @@
 </head>
 <body>
     <?php
+    $sql="select * from procos where username='$username'";
+    $result=mysqli_query($conn, $sql)->fetch_assoc();
+    $sem_proco = $result["sem"];
+    $year_proco = $result["year"];
     if (isset($_POST['semester'])){
         $semester= $_POST['semester'];
         $startdate= $_POST['startdate'];
         $enddate= $_POST['enddate'];
         $logno= $_POST['logno'];
-        $year= 'T.E';
-
+        $year= $_POST['year'];
         $query= "insert into log_creation (log_no,year,sem,date_from,date_to) values ('$logno','$year','$semester','$startdate','$enddate')";
-        $result= mysqli_query($conn,$query);
+        $result_insert= mysqli_query($conn,$query);
     };
     
     ?>
@@ -61,20 +64,11 @@
 
             <div class="col-sm-4 col-xs-4">
               <label for="semester" class="form-label">Semester</label>
-              <select class="form-select" id="semester" name="semester" required>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-              </select>
+              <input class="form-control" value="<?php echo $result["sem"] ?>" id="semester" name="semester" readonly>
             </div>
             <div class="col-sm-4 col-xs-4">
               <label for="semester" class="form-label">Year</label>
-              <input class="form-control" name="year" id="year" type="text" placeholder="" readonly>
+              <input class="form-control" name="year" id="year" type="text" value="<?php echo $result["year"] ?>" readonly>
             </div>
 
           <div class="row g-3 my-1">
@@ -103,18 +97,19 @@
       <div class="container">
         <h2 class="my-4">Previously Created Logs: </h2>
           <?php
-            $query= "select * from log_creation";
-            $result= mysqli_query($conn,$query);
-            while ($res=$result->fetch_assoc()){
+            $query= "select * from log_creation where sem='$sem_proco' and year='$year_proco'";
+            $result_log= mysqli_query($conn,$query);
+            while ($res=$result_log->fetch_assoc()){
               echo ('
-                <div class="card">
+                <div class="card my-4 text-center">
                   <div class="card-header">
                     Log Number '.$res["log_no"].'
                   </div>
                   <div class="card-body">
                     <blockquote class="blockquote mb-0">
-                      <p>A well-known quote, contained in a blockquote element.</p>
-                      <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+                      <p>Year: '. $res["year"] .'</p>
+                      <p>Sem: '. $res["sem"] .'</p>
+                      <p>Date: '. $res["date_from"] .' To '. $res["date_to"] .'</p>
                     </blockquote>
                   </div>
                 </div>

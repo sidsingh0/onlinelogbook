@@ -12,8 +12,21 @@
   if(isset($_POST["f_username"])){
     $f_username=$_POST["f_username"];
     $f_role=$_POST["f_role"];
-    $sql="update users set role='$f_role' where username=$f_username";
-    $res=mysqli_query($conn, $sql);
+    $f_sem=$_POST["f_sem"];
+    $f_year=$_POST["f_year"];
+    if($f_role == "proco"){
+      $sql1="select * from procos where username='$f_username'";
+      $result1=mysqli_query($conn, $sql1)->fetch_assoc();
+      if($result1){
+        $sql2="update procos set sem='$f_sem', year='$f_year' where username=$f_username";
+        $res2=mysqli_query($conn, $sql2);
+      }else{
+        $sql2="insert into procos (username, sem, year) values ('$f_username', '$f_sem', '$f_year')";
+        $res2=mysqli_query($conn, $sql2);
+      }
+    }
+    $sql3="update users set role='$f_role' where username=$f_username";
+    $res3=mysqli_query($conn, $sql3); 
   }
 ?>
 <!DOCTYPE html>
@@ -71,11 +84,34 @@
           </div>
           <div class="col-xs-12 mb-3">
             <label for="role" class="form-label">Faculty Username</label>
-            <select class="form-control" name="f_role" id="role">
+            <select class="form-select" name="f_role" id="role">
                 <option value="guide" >Guide</option>
                 <option value="proco" >Project Co-ordinator</option>
             </select>
           </div>
+
+          <div class="col-xs-12 mb-3">
+            <label for="role" class="form-label">Semester</label>
+            <select class="form-select" name="f_sem" id="role">
+                <option >I</option>
+                <option >II</option>
+                <option >III</option>
+                <option >IV</option>
+                <option >V</option>
+                <option >VI</option>
+                <option >VII</option>
+                <option >VIII</option>
+            </select>
+          </div>
+
+        <div class="col-xs-12 mb-3">
+          <label for="role" class="form-label">Year</label>
+          <select class="form-select" name="f_year" id="role">
+              <option >SE</option>
+              <option >TE</option>
+              <option >BE</option>
+          </select>
+        </div>
 
           <div class="row g-3 my-2">
             <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
@@ -84,9 +120,6 @@
           </div>
 
         </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
