@@ -39,7 +39,7 @@ include("connect.php"); ?>
     </nav>
     <?php
     // echo "hello";
-    $group_no = 0;
+    // $group_no = 0;
     $sql_select = "select max(groupno)+1 from groups";
     $result = mysqli_query($conn, $sql_select);
     while ($data = $result->fetch_assoc()) {
@@ -118,7 +118,7 @@ include("connect.php"); ?>
             </tr>
             <?php
             $guide_id = "1234567890";
-            $query = "select * from groups where guide_id =$guide_id ";
+            $query = "select * from groups where guide_id =$guide_id order by `groupno`";
             $result = mysqli_query($conn, $query);
             while ($data = $result->fetch_assoc()) {
                 // echo var_dump($data);
