@@ -28,6 +28,24 @@
                 </li>
               ';
               }
+              if($_COOKIE["role"] == "student"){
+                echo '
+                <li class="nav-item mx-1">
+                  <a class="nav-link" href="/logbook_online/onlinelogbook/student/index.php" aria-current="page">Home</a>
+                </li>
+              ';
+              }
+              if($_COOKIE["role"] == "guide"){
+                echo '
+                <li class="nav-item mx-1">
+                  <a class="nav-link" href="/logbook_online/onlinelogbook/guide/index.php" aria-current="page">Home</a>
+                </li>
+
+                <li class="nav-item mx-1">
+                  <a class="nav-link" href="/logbook_online/onlinelogbook/guide/add-group.php" aria-current="page">Add A Group</a>
+                </li>
+              ';
+              }
               ?>
               <li class="mx-1">
                 <a href="/logbook_online/onlinelogbook/logout.php?logout=true" class="btn btn-outline-info text-info-emphasis bg-info-subtle">Sign Out</a>
