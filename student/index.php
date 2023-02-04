@@ -86,8 +86,8 @@
                     $log_no = $res["log_no"];
                     $sql_log_content = "select * from log_content where log_no=$log_no and groupno=$groupno";
                     $res_log_content = mysqli_query($conn, $sql_log_content) or die(mysqli_error($conn));   
-                    if($res_log_content){
-                        echo "<center>No Logs Are Pending...</center>";
+                    if($res_log_content->fetch_assoc()){
+
                     } else{
                         echo '
                         <div class="card">

@@ -42,7 +42,7 @@
             $res_log = mysqli_query($conn, $sql_log);
             while($res=$res_log->fetch_assoc()){ 
                 echo '
-                <div class="card">
+                <div class="card my-4">
                     <div class="card-body text-white">
                         Log # '. $res["log_no"] .' was uploaded on '. $res["date"] .' 
                     </div>
