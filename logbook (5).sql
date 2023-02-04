@@ -4,11 +4,15 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
+<<<<<<< HEAD
 <<<<<<<< HEAD:logbook (4).sql
 -- Generation Time: Feb 03, 2023 at 12:24 PM
 ========
 -- Generation Time: Feb 04, 2023 at 08:49 AM
 >>>>>>>> a02417380b354152509e8c1e5bf3f24bbd2ba14a:logbook (5).sql
+=======
+-- Generation Time: Feb 04, 2023 at 08:49 AM
+>>>>>>> a4ee5306467d9a6afbdf3b4ea2ed02798aa0f900
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -144,6 +148,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`username`, `password`, `role`) VALUES
 ('20102109', '1234', 'student'),
+<<<<<<< HEAD
 <<<<<<<< HEAD:logbook (4).sql
 ('20102125', '1234', 'student'),
 ('20102137', '1234', 'student'),
@@ -153,6 +158,11 @@ INSERT INTO `users` (`username`, `password`, `role`) VALUES
 ('20102137', '1234', 'proco'),
 ('20102176', '1234', 'guide');
 >>>>>>>> a02417380b354152509e8c1e5bf3f24bbd2ba14a:logbook (5).sql
+=======
+('20102125', '1234', 'admin'),
+('20102137', '1234', 'proco'),
+('20102176', '1234', 'guide');
+>>>>>>> a4ee5306467d9a6afbdf3b4ea2ed02798aa0f900
 
 --
 -- Indexes for dumped tables
