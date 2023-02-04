@@ -132,7 +132,8 @@
             </div>
             <h6>Guide Name: '. $guide_name .'</h6>
         
-            <hr class="my-5" style="height:2px;border-width:0;color:gray;background-color:gray">';
+            <hr class="my-5" style="height:2px;border-width:0;color:gray;background-color:gray">
+            <h6>Date: '. $date_of_log_sub .'</h6>';
             }
             ?>
 
