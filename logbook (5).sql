@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 03, 2023 at 12:02 PM
+-- Generation Time: Feb 04, 2023 at 08:49 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -32,6 +32,8 @@ CREATE TABLE `groups` (
   `groupno` int(11) NOT NULL,
   `student_id` varchar(15) NOT NULL,
   `guide_id` varchar(15) NOT NULL,
+  `sem` varchar(15) NOT NULL,
+  `year` varchar(10) NOT NULL,
   `title` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -67,6 +69,34 @@ CREATE TABLE `log_creation` (
   `date_to` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `log_creation`
+--
+
+INSERT INTO `log_creation` (`id`, `log_no`, `year`, `sem`, `date_from`, `date_to`) VALUES
+(1, 1, 'SE', 'IV', '2023-02-02', '2023-02-10'),
+(2, 2, 'SE', 'IV', '2023-02-18', '2023-02-25');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `procos`
+--
+
+CREATE TABLE `procos` (
+  `id` int(11) NOT NULL,
+  `username` varchar(15) NOT NULL,
+  `sem` varchar(10) NOT NULL,
+  `year` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `procos`
+--
+
+INSERT INTO `procos` (`id`, `username`, `sem`, `year`) VALUES
+(1, '20102137', 'IV', 'SE');
+
 -- --------------------------------------------------------
 
 --
@@ -81,6 +111,16 @@ CREATE TABLE `userinfo` (
   `dept` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `userinfo`
+--
+
+INSERT INTO `userinfo` (`username`, `name`, `email`, `mobile_no`, `dept`) VALUES
+('20102109', 'savresh', 'savresh@pmail.com', '8789685786', 'COMP'),
+('20102137', 'bandan', 'bandan@pmail.com', '8789685786', 'COMP'),
+('20102176', 'bandar', 'bandar@pmail.com', '8789685786', 'COMP'),
+('20102125', 'godhbandar', 'godhbandar@pmail.com', '8789685786', 'COMP');
+
 -- --------------------------------------------------------
 
 --
@@ -89,9 +129,19 @@ CREATE TABLE `userinfo` (
 
 CREATE TABLE `users` (
   `username` varchar(15) NOT NULL,
-  `password` varchar(200) NOT NULL,
+  `password` varchar(300) NOT NULL,
   `role` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`username`, `password`, `role`) VALUES
+('20102109', '1234', 'student'),
+('20102125', '1234', 'admin'),
+('20102137', '1234', 'proco'),
+('20102176', '1234', 'guide');
 
 --
 -- Indexes for dumped tables
@@ -117,6 +167,12 @@ ALTER TABLE `log_content`
 -- Indexes for table `log_creation`
 --
 ALTER TABLE `log_creation`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `procos`
+--
+ALTER TABLE `procos`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -151,7 +207,13 @@ ALTER TABLE `log_content`
 -- AUTO_INCREMENT for table `log_creation`
 --
 ALTER TABLE `log_creation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `procos`
+--
+ALTER TABLE `procos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
@@ -163,6 +225,13 @@ ALTER TABLE `log_creation`
 ALTER TABLE `groups`
   ADD CONSTRAINT `groups_FK_1` FOREIGN KEY (`student_id`) REFERENCES `users` (`username`),
   ADD CONSTRAINT `groups_FK_2` FOREIGN KEY (`guide_id`) REFERENCES `users` (`username`);
+
+--
+-- Constraints for table `log_content`
+--
+ALTER TABLE `log_content`
+  ADD CONSTRAINT `log_content_FK_1` FOREIGN KEY (`groupno`) REFERENCES `groups` (`groupno`),
+  ADD CONSTRAINT `log_content_FK_2` FOREIGN KEY (`log_no`) REFERENCES `log_creation` (`log_no`);
 
 --
 -- Constraints for table `userinfo`
