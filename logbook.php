@@ -17,11 +17,14 @@
     <title>APSIT Logbook</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <style>
+        @media print {.btn { display:none; } a[href]:after { content: none !important; } }
+    </style>
 </head>
 <body>
 
 <div class="container">
-          
+<center><button onclick="window.print()" class=" w-75 btn btn-outline-info">Download</button></center>     
     <hr style="height:2px;border-width:0;color:gray;background-color:gray">
     <center><h2>A.P. Shah Institute Of Technology</h2></center>
     <hr style="height:2px;border-width:0;color:gray;background-color:gray">
@@ -32,6 +35,10 @@
         $semester = $res["sem"];
         $year = $res["year"];
         $title= $res["title"];
+        $guide_id = $res["guide_id"];
+        $sql_i = "select * from userinfo where username = '$guide_id'";
+        $res_i = mysqli_query($conn, $sql_i)->fetch_assoc();
+        $guide_name = $res_i["name"];
     ?>
     <center>
         <h5 class="text-muted">Academic Year <?php echo date("y",strtotime("-1 year")) . " - " . $year_now; ?></h5>
@@ -46,7 +53,6 @@
     <?php
         $sql="select * from groups where groupno=$group_no";
         $res= mysqli_query($conn, $sql);
-
         $i=1;
         while($r=$res->fetch_assoc()){
             $student_id = $r["student_id"];
@@ -68,7 +74,7 @@
     <div class="mt-5">
     <?php include("./footer-of-logbook.php"); ?>
     </div>
-    <h6>Guide Name: </h6>
+    <h6>Guide Name: <?php echo $guide_name; ?></h6>
 
     <hr class="my-5" style="height:2px;border-width:0;color:gray;background-color:gray">
 
@@ -115,7 +121,18 @@
                 echo "<p>Team Member ".$i.": ".$d["student_id"]." - ". $d["name"] ."</p>";
             $i++;
             }
-            echo "</div>";
+            echo '</div>
+            <hr class="mb-5" style="height:2px;border-width:0;color:gray;background-color:gray">
+            <div class="mt-5">
+            <div class="d-flex row">
+                <h6 class="text-start col-md-4 col-lg-4 col-sm-4 col-xs-4 my-5">Project Guide</h6>
+                <h6 class="text-center col-md-4 col-lg-4 col-sm-4 col-xs-4 my-5">Project Co-ordinator</h6>
+                <h6 class="text-end col-md-4 col-lg-4 col-sm-4 col-xs-4 my-5">Head Of Department</h6>
+            </div>
+            </div>
+            <h6>Guide Name: '. $guide_name .'</h6>
+        
+            <hr class="my-5" style="height:2px;border-width:0;color:gray;background-color:gray">';
             }
             ?>
 
