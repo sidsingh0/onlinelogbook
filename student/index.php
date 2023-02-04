@@ -26,7 +26,8 @@
             $sql="select * from groups where groupno=$groupno";
             $result=mysqli_query($conn, $sql);
         }else{
-            echo "Please wait for a guide to add you!";
+            echo "<center>Please wait for a guide to add you!</center>";
+            exit;
         }
     ?>
     <div class="container">
