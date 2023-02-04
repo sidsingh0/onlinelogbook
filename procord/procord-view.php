@@ -1,6 +1,11 @@
 <?php
   include("../includes/connect.php");
   include("../includes/conditions.php");
+  if($_COOKIE["role"] == "proco"){
+    $role = $_COOKIE["role"];
+  }else{
+    header("Location: ". $_SERVER["HTTP_REFERER"]);
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">

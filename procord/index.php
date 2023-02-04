@@ -1,10 +1,10 @@
 <?php
   include("../includes/connect.php");
   include("../includes/conditions.php");
-  if($_COOKIE["role"] == "proco" || $_COOKIE["role"] == "admin"){
+  if($_COOKIE["role"] == "proco"){
     $role = $_COOKIE["role"];
   }else{
-    header("Location: /logbook_online/onlinelogbook/index.php");
+    header("Location: ". $_SERVER["HTTP_REFERER"]);
   }
 ?>
 
@@ -29,6 +29,7 @@
     $result=mysqli_query($conn, $sql)->fetch_assoc();
     $sem_proco = $result["sem"];
     $year_proco = $result["year"];
+
     if (isset($_POST['semester'])){
         $semester= $_POST['semester'];
         $startdate= $_POST['startdate'];
@@ -38,6 +39,14 @@
         $query= "insert into log_creation (log_no,year,sem,date_from,date_to) values ('$logno','$year','$semester','$startdate','$enddate')";
         $result_insert= mysqli_query($conn,$query);
     };
+
+    if(isset($_POST["submitmodal"])){
+      $startdate= $_POST['date_from'];
+      $enddate= $_POST['date_to'];
+      $id= $_POST["id"];
+      $query_update= "update log_creation set date_from='$startdate' , date_to='$enddate' where id=$id";
+      $result_update= mysqli_query($conn,$query_update);
+    }
     
     ?>
 
@@ -101,9 +110,46 @@
             $result_log= mysqli_query($conn,$query);
             while ($res=$result_log->fetch_assoc()){
               echo ('
+
+              <div class="modal fade" id="exampleModal'. $res["log_no"]. '" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Details</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form method="POST" action="'.$_SERVER["PHP_SELF"].'">
+                    <input type="hidden" value="'. $res["id"] .'" name="id">
+                    <div class="col-xs-12">
+                        <label for="date_from" class="form-label">Date From</label>
+                        <input type="date" class="form-control" name="date_from" id="date_from" value="'. $res["date_from"]. '">
+                      </div>
+                      <div class="col-xs-12">
+                        <label for="date_to" class="form-label">Date To</label>
+                        <input type="date" class="form-control" name="date_to" id="date_to" value="'. $res["date_to"]. '">
+                      </div>     
+            
+                      <div class="row g-3 my-2">
+                        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+                          <button class="w-100 btn btn-outline-info" name="submitmodal" type="submit">Submit</button>
+                        </div>
+                      </div>
+            
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
                 <div class="card my-4 text-center">
                   <div class="card-header">
-                    Log Number '.$res["log_no"].'
+                    <div class="text-start">
+                      Log Number '.$res["log_no"].'
+                      <button type="button" style="float: right!important;" class="text-white btn" data-bs-toggle="modal" data-bs-target="#exampleModal'. $res["log_no"]. '">
+                        Update
+                      </button>
+                    </div>
                   </div>
                   <div class="card-body">
                     <blockquote class="blockquote mb-0">
@@ -111,6 +157,7 @@
                       <p>Sem: '. $res["sem"] .'</p>
                       <p>Date: '. $res["date_from"] .' To '. $res["date_to"] .'</p>
                     </blockquote>
+
                   </div>
                 </div>
               ');

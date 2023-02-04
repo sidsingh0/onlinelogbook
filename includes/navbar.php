@@ -11,7 +11,7 @@
           <div class="collapse navbar-collapse" id="mynavbar">
             <ul class="navbar-nav nav-pills ms-auto">
               <?php 
-              if($_COOKIE["role"] == "proco" || $_COOKIE["role"] == "admin"){
+              if($_COOKIE["role"] == "proco"){
                 echo '
                   <li class="nav-item mx-1">
                     <a class="nav-link" href="/logbook_online/onlinelogbook/procord/index.php">Add</a>
@@ -20,13 +20,13 @@
                     <a class="nav-link" href="/logbook_online/onlinelogbook/procord/procord-view.php" aria-current="page">View</a>
                   </li>
                 ';
-                if($_COOKIE["role"] == "admin"){
-                  echo '
-                  <li class="nav-item mx-1">
-                    <a class="nav-link" href="/logbook_online/onlinelogbook/procord/edit-faculties.php" aria-current="page">Edit Faculties</a>
-                  </li>
-                ';
-                }
+              }
+              if($_COOKIE["role"] == "admin"){
+                echo '
+                <li class="nav-item mx-1">
+                  <a class="nav-link" href="/logbook_online/onlinelogbook/procord/edit-faculties.php" aria-current="page">Edit Faculties</a>
+                </li>
+              ';
               }
               ?>
               <li class="mx-1">

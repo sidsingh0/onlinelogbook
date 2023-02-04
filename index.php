@@ -2,7 +2,7 @@
 <?php 
   include("./includes/connect.php");
 ?>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -64,9 +64,9 @@
         -webkit-overflow-scrolling: touch;
       }
 
-      html,
-body {
+html,body {
   height: 100%;
+  color-scheme: dark!important;
 }
 
 body {
@@ -74,7 +74,6 @@ body {
   align-items: center;
   padding-top: 40px;
   padding-bottom: 40px;
-  background-color: #f5f5f5;
 }
 
 .form-signin {
@@ -138,8 +137,8 @@ body {
       <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
       <label for="password">Password</label>
     </div>
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-    <p class="mt-5 mb-3 text-muted">&copy; 2017–2023</p>
+    <button class="w-100 btn btn-lg btn-outline-info" type="submit">Sign in</button>
+    <p class="mt-5 mb-3 text-muted">&copy; 2017 – 2023</p>
   </form>
 </main>
 
