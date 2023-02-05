@@ -87,12 +87,12 @@
         </div>
 
         <div class="form-group row my-2">
-            <div class="input-group">
-                <span class="input-group-text">Moodle IDs of members</span>
-                <input type="text" maxlength="8" name="moodleid[]" class="form-control" required>
-                <input type="text" maxlength="8" name="moodleid[]" class="form-control" required>
-                <input type="text" maxlength="8" name="moodleid[]" class="form-control" required>
-                <input type="text" maxlength="8" name="moodleid[]" class="form-control" required>
+            <div class="input">
+                <span class="input-group-text ">Moodle IDs of members</span>
+                <input type="text" maxlength="8" name="moodleid[]" class="form-control " required>
+                <input type="text" maxlength="8" name="moodleid[]" class="form-control my-1" required>
+                <input type="text" maxlength="8" name="moodleid[]" class="form-control my-1" required>
+                <input type="text" maxlength="8" name="moodleid[]" class="form-control my-1" required>
             </div>
         </div>
         <div class="form-group row">
