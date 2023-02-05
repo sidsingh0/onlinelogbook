@@ -24,7 +24,7 @@
 <body>
 
 <div class="container">
-<center><button onclick="window.print()" class=" w-75 btn btn-outline-info">Download</button></center>     
+<center><button onclick="location.href'/logbook3.php'" class=" w-75 btn btn-outline-info">Download</button></center>     
     <hr style="height:2px;border-width:0;color:gray;background-color:gray">
     <center><h2>A.P. Shah Institute Of Technology</h2></center>
     <hr style="height:2px;border-width:0;color:gray;background-color:gray">
