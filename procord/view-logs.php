@@ -139,7 +139,7 @@
 <div class="container">
           
     <hr style="height:2px;border-width:0;color:gray;background-color:gray">
-    <button class="w-100 btn btn-info" onclick="window.open('/logbook_online/onlinelogbook/logbook.php?groupno=<?php echo $group_no;?>', 'newwindow','width=1000,height=1000'); return false;">Get Log Book</button>
+    <button class="w-100 btn btn-info" onclick="window.open('/logbook_online/onlinelogbook/logbook-pdf.php?groupno=<?php echo $group_no; ?>', 'newwindow','width=1000,height=1000'); return false;">Get Log Book</button>
       
           <h2 class="my-5">Log Details:</h2>                      
     <div>
