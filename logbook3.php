@@ -155,14 +155,14 @@
         function Footer()
         {
             global $guide_name;
-            $this->SetY(-38);
+            $this->SetY(-27);
             $this->SetFont('Times','B',12);
             $this->Cell(0,10,'Project Guide',0,0,'L');
             $this->SetX($this->lMargin);
             $this->Cell(0,10,'Project Co-ordinator',0,0,'C');
             $this->SetX($this->lMargin);
             $this->Cell( 0, 10, 'Head of Department', 0, 0,'R');
-            $this->SetY(-22);
+            $this->SetY(-20);
             $this->Cell( 0, 10, 'Guide Name: ' . $guide_name, 0, 0,'L');
             // Position at 1 cm from bottom
             $this->SetY(-15);
@@ -336,6 +336,7 @@
         
 
         $pdf->SetFont('Arial','B',15);
+        $pdf->Line(10, $y2+108, 210-10, $y2+108);
         $pdf->SetY($y2+113);
         $pdf->Cell(0,0,'Guides Review :', 0, 1, 'L');
 
@@ -355,12 +356,13 @@
         $pdf->SetY($y2+160);
         $pdf->Cell(0,0,'Signatures :', 0, 1, 'L');
 
-        $pdf->SetFont('Arial','',15);
+        $pdf->SetFont('Arial','B',15);
         $pdf->SetY($y2+202);
         $pdf->Cell(0,0,'Date : '.$date_of_log_sub, 0, 1, 'L');
 
         $i=1;
         $y2 = $y2 + 160;
+        $pdf->SetFont('Arial','',15);
         while($d=$res_for_grps->fetch_assoc()){
             $y2 = $y2 + 8;
             $pdf->SetY($y2);
