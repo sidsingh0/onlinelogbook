@@ -8,6 +8,10 @@
     exit;
   }
 
+  if ($_COOKIE['role']!='guide'){
+    header("Location: /logbook_online/onlinelogbook/logout.php?logout=true");
+  }
+
   if(isset($_POST["guidesubmit"])){
     $guide_rev = $_POST["guide"];
     $group_no = $_POST["grpno"];

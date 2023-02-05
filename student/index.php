@@ -1,6 +1,10 @@
 <?php
   include("../includes/connect.php");
   include("../includes/conditions.php");
+
+  if ($_COOKIE['role']!='student'){
+    header("Location: /logbook_online/onlinelogbook/logout.php?logout=true");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">

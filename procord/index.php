@@ -1,10 +1,8 @@
 <?php
   include("../includes/connect.php");
   include("../includes/conditions.php");
-  if($_COOKIE["role"] == "proco"){
-    $role = $_COOKIE["role"];
-  }else{
-    header("Location: ". $_SERVER["HTTP_REFERER"]);
+  if ($_COOKIE['role']!='proco'){
+    header("Location: /logbook_online/onlinelogbook/logout.php?logout=true");
   }
 ?>
 

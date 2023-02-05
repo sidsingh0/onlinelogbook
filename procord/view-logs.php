@@ -7,7 +7,9 @@
     header("Location: /logbook_online/onlinelogbook/procord/procord-view.php");
     exit;
   }
-
+  if ($_COOKIE['role']!='proco'){
+    header("Location: /logbook_online/onlinelogbook/logout.php?logout=true");
+  }
   if(isset($_POST["log_id"])){
     $log_id = $_POST["log_id"];
     $progress_planned = $_POST["progress_planned"];
