@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 04, 2023 at 08:49 AM
+-- Generation Time: Feb 05, 2023 at 09:19 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -29,13 +29,35 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `groups` (
   `id` int(11) NOT NULL,
-  `groupno` int(11) NOT NULL,
+  `groupno` int(11) NOT NULL DEFAULT 0,
   `student_id` varchar(15) NOT NULL,
   `guide_id` varchar(15) NOT NULL,
   `sem` varchar(15) NOT NULL,
   `year` varchar(10) NOT NULL,
   `title` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `groups`
+--
+
+INSERT INTO `groups` (`id`, `groupno`, `student_id`, `guide_id`, `sem`, `year`, `title`) VALUES
+(7, 1, '20102109', '20102176', 'V', 'TE', 'Hello World'),
+(8, 1, '20102109', '20102176', 'V', 'TE', 'Hello World'),
+(9, 1, '20102109', '20102176', 'V', 'TE', 'Hello World'),
+(10, 1, '20102109', '20102176', 'V', 'TE', 'Hello World'),
+(11, 2, '20102137', '20102176', 'IV', 'SE', 'Bye World'),
+(12, 2, '20102137', '20102176', 'IV', 'SE', 'Bye World'),
+(13, 2, '20102137', '20102176', 'IV', 'SE', 'Bye World'),
+(14, 2, '20102137', '20102176', 'IV', 'SE', 'Bye World'),
+(15, 3, '20102125', '20102176', 'V', 'TE', 'Wow MOMOS'),
+(16, 3, '20102125', '20102176', 'V', 'TE', 'Wow MOMOS'),
+(17, 3, '20102125', '20102176', 'V', 'TE', 'Wow MOMOS'),
+(18, 3, '20102125', '20102176', 'V', 'TE', 'Wow MOMOS'),
+(19, 4, '20102095', '20102095', 'V', 'TE', 'Ev Startup'),
+(20, 4, '20102095', '20102095', 'V', 'TE', 'Ev Startup'),
+(21, 4, '20102095', '20102095', 'V', 'TE', 'Ev Startup'),
+(22, 4, '20102095', '20102095', 'V', 'TE', 'Ev Startup');
 
 -- --------------------------------------------------------
 
@@ -53,6 +75,15 @@ CREATE TABLE `log_content` (
   `guide_review` text NOT NULL,
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `log_content`
+--
+
+INSERT INTO `log_content` (`id`, `sem`, `groupno`, `log_no`, `progress_planned`, `progress_achieved`, `guide_review`, `date`) VALUES
+(8, 'V', 1, 1, 'project topic socha', 'ho gaya\r\n', 'very good', '2023-02-04'),
+(9, 'V', 1, 2, 'done work', 'maja aya', 'nice work', '2023-02-04'),
+(10, 'V', 1, 3, 'nice work done', 'hello', 'good work again', '2023-02-04');
 
 -- --------------------------------------------------------
 
@@ -74,8 +105,10 @@ CREATE TABLE `log_creation` (
 --
 
 INSERT INTO `log_creation` (`id`, `log_no`, `year`, `sem`, `date_from`, `date_to`) VALUES
-(1, 1, 'SE', 'IV', '2023-02-02', '2023-02-10'),
-(2, 2, 'SE', 'IV', '2023-02-18', '2023-02-25');
+(1, 1, 'TE', 'V', '2023-02-02', '2023-02-10'),
+(2, 2, 'SE', 'IV', '2023-02-18', '2023-02-25'),
+(3, 2, 'TE', 'V', '2023-02-02', '2023-02-06'),
+(4, 3, 'TE', 'V', '2023-02-03', '2023-02-05');
 
 -- --------------------------------------------------------
 
@@ -95,7 +128,7 @@ CREATE TABLE `procos` (
 --
 
 INSERT INTO `procos` (`id`, `username`, `sem`, `year`) VALUES
-(1, '20102137', 'IV', 'SE');
+(1, '20102137', 'V', 'TE');
 
 -- --------------------------------------------------------
 
@@ -119,7 +152,8 @@ INSERT INTO `userinfo` (`username`, `name`, `email`, `mobile_no`, `dept`) VALUES
 ('20102109', 'savresh', 'savresh@pmail.com', '8789685786', 'COMP'),
 ('20102137', 'bandan', 'bandan@pmail.com', '8789685786', 'COMP'),
 ('20102176', 'bandar', 'bandar@pmail.com', '8789685786', 'COMP'),
-('20102125', 'godhbandar', 'godhbandar@pmail.com', '8789685786', 'COMP');
+('20102125', 'godhbandar', 'godhbandar@pmail.com', '8789685786', 'COMP'),
+('20102095', 'Samosa Pav', 'samosa@pmail.com', '8789685786', 'COMP');
 
 -- --------------------------------------------------------
 
@@ -138,6 +172,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`username`, `password`, `role`) VALUES
+('20102095', '1234', 'guide'),
 ('20102109', '1234', 'student'),
 ('20102125', '1234', 'admin'),
 ('20102137', '1234', 'proco'),
@@ -159,9 +194,7 @@ ALTER TABLE `groups`
 -- Indexes for table `log_content`
 --
 ALTER TABLE `log_content`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `log_content_FK_1` (`groupno`),
-  ADD KEY `log_content_FK_2` (`log_no`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `log_creation`
@@ -195,19 +228,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `log_content`
 --
 ALTER TABLE `log_content`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `log_creation`
 --
 ALTER TABLE `log_creation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `procos`
@@ -225,13 +258,6 @@ ALTER TABLE `procos`
 ALTER TABLE `groups`
   ADD CONSTRAINT `groups_FK_1` FOREIGN KEY (`student_id`) REFERENCES `users` (`username`),
   ADD CONSTRAINT `groups_FK_2` FOREIGN KEY (`guide_id`) REFERENCES `users` (`username`);
-
---
--- Constraints for table `log_content`
---
-ALTER TABLE `log_content`
-  ADD CONSTRAINT `log_content_FK_1` FOREIGN KEY (`groupno`) REFERENCES `groups` (`groupno`),
-  ADD CONSTRAINT `log_content_FK_2` FOREIGN KEY (`log_no`) REFERENCES `log_creation` (`log_no`);
 
 --
 -- Constraints for table `userinfo`

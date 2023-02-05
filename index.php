@@ -138,7 +138,7 @@ body {
       <label for="password">Password</label>
     </div>
     <button class="w-100 btn btn-lg btn-outline-info" type="submit">Sign in</button>
-    <p class="mt-5 mb-3 text-muted">&copy; 2017 – 2023</p>
+    <p class="mt-5 mb-3 text-muted">&copy; APSIT – 2023</p>
   </form>
 </main>
 
