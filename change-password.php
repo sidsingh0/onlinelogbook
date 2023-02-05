@@ -1,6 +1,12 @@
 <!doctype html>
 <?php 
   include("./includes/connect.php");
+  include("./includes/conditions.php");
+  $sql = "select * from users where username = $username";
+  $result = mysqli_query($conn, $sql)->fetch_assoc();
+  if ($result['password']!='1234'){
+    header("Location: /logbook_online/onlinelogbook/check-user.php");
+  }
 ?>
 <html lang="en" data-bs-theme="dark">
   <head>
@@ -101,32 +107,19 @@ body {
   </head>
   <?php 
     $msg="";
-    if(isset($_POST["username"])){
-      $username = $_POST["username"];
-      $password = $_POST["password"];
-		  $hash = password_hash($password,PASSWORD_DEFAULT);
-      echo($hash);
-      $sql = "select * from users where username = $username";
-      $result = mysqli_query($conn, $sql)->fetch_assoc();
-      if($result){
-        if ($password=='1234'){
-          session_start();
-          setcookie("username", $username, time() + 3600);
-          setcookie("role", $result["role"], time() + 3600);
-          header("Location: /logbook_online/onlinelogbook/change-password.php");
-        }
-        else{
-        if(password_verify($result["password"],$hash)){
-          session_start();
-          setcookie("username", $username, time() + 3600);
-          setcookie("role", $result["role"], time() + 3600);
-          header("Location: /logbook_online/onlinelogbook/check-user.php");
-        }else{
-          $msg = "Password is Incorrect";
-        }
-      } 
+    if(isset($_POST["npass"])){
+      $npass = $_POST["npass"];
+      $cpass = $_POST["cpass"];
+		  // $hash = password_hash($password,PASSWORD_DEFAULT);
+      // echo($hash);
+
+      if($npass==$cpass){
+        $hash = password_hash($npass,PASSWORD_DEFAULT);
+        $sql = "update users set password='$hash' where username = $username";
+        $result = mysqli_query($conn, $sql);
+        header("Location: /logbook_online/onlinelogbook/check-user.php");
       }else{
-        $msg = "Username is Incorrect";
+        $msg = "Passwords do not match.";
       }
 
     }
@@ -136,16 +129,16 @@ body {
 <main class="form-signin w-100 m-auto">
   <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
     <!-- <img class="mb-4" src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
-    <h1 class="h3 mb-3 fw-normal">APSIT Online Logbook</h1>
+    <h1 class="h3 mb-3 fw-normal">Change Password</h1>
     <p class="text-danger"><?php echo $msg;?></p>
 
     <div class="form-floating">
-      <input  oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type = "number" maxlength = "10" class="form-control" name="username" id="username" placeholder="Moodle/Phone No" required>
-      <label for="username">Username</label>
+      <input type="password" class="form-control" name="npass" id="npass" placeholder="New password" required>
+      <label for="npass">New password</label>
     </div>
     <div class="form-floating">
-      <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
-      <label for="password">Password</label>
+      <input type="password" class="form-control" name="cpass" id="cpass" placeholder="Confirm password" required>
+      <label for="cpass">Confirm password</label>
     </div>
     <button class="w-100 btn btn-lg btn-outline-info" type="submit">Sign in</button>
     <p class="mt-5 mb-3 text-muted">&copy; APSIT – 2023</p>
