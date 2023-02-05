@@ -78,19 +78,19 @@
       </div>
       <div class="modal-body">
         <form method="POST" action="'.$_SERVER["PHP_SELF"].'">
-          <div class="col-xs-12">
+          <div class="col-xs-12 my-3">
             <label for="'. $r["username"]. '" class="form-label">Faculty Username</label>
             <input class="form-control" name="f_username" id="'. $r["username"]. '" value="'. $r["username"]. '" readonly>
           </div>
           <div class="col-xs-12 mb-3">
-            <label for="role" class="form-label">Faculty Username</label>
+            <label for="role" class="form-label">Faculty Role</label>
             <select class="form-select" name="f_role" id="role">
                 <option value="guide" >Guide</option>
                 <option value="proco" >Project Co-ordinator</option>
             </select>
           </div>
 
-          <div class="col-xs-12 mb-3">
+          <div class="col-xs-12 mb-3 my-3">
             <label for="role" class="form-label">Semester</label>
             <select class="form-select" name="f_sem" id="role">
                 <option >I</option>
