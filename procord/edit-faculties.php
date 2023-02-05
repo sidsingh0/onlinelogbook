@@ -43,16 +43,16 @@
 <body>
     <?php include('../includes/navbar.php')?>
     <div class="container">
-        <h3 class="my-5">Below listed are all the faculties:</h3>
+        <h3 class="my-4">Below listed are all the faculties:</h3>
         <hr>
     <?php 
     $sql = "select * from users NATURAL JOIN userinfo where role='proco' OR role='guide'";
     $res=mysqli_query($conn, $sql) or die(mysqli_error($conn));
 
     echo '
-    <div class="col-lg-12">
+    <div class="col-lg-12" style="border-radius:6px;overflow:hidden;border:0.2px solid grey">
     <div class="table-responsive"> 
-    <table class="table">
+    <table class="table table-bordered border-secondary rounded-2 my-0">
         <thead>
             <tr>
                 <th scope="col">Username</th>

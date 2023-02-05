@@ -87,14 +87,12 @@ body {
 
 .form-signin input[type="text"] {
   margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
+
 }
 
 .form-signin input[type="password"] {
   margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+
 }
     </style>
 
@@ -135,20 +133,20 @@ body {
     
 <main class="form-signin w-100 m-auto">
   <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-    <!-- <img class="mb-4" src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
-    <h1 class="h3 mb-3 fw-normal">APSIT Online Logbook</h1>
+    <!-- <img class="mb-4" src="./logo.png" alt=""> -->
+    <h1 class="h3 mb-3 fw-medium">APSIT Online Logbook</h1>
     <p class="text-danger"><?php echo $msg;?></p>
 
-    <div class="form-floating">
+    <div class="form-floating mb-2 rounded-3">
       <input  oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type = "number" maxlength = "10" class="form-control" name="username" id="username" placeholder="Moodle/Phone No" required>
       <label for="username">Username</label>
     </div>
-    <div class="form-floating">
+    <div class="form-floating mb-2 rounded-3">
       <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
       <label for="password">Password</label>
     </div>
     <button class="w-100 btn btn-lg btn-outline-info" type="submit">Sign in</button>
-    <p class="mt-5 mb-3 text-muted">&copy; APSIT – 2023</p>
+    <p class="mt-4 mb-3 text-muted">&copy; APSIT – 2023</p>
   </form>
 </main>
 
