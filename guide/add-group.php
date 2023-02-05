@@ -51,9 +51,10 @@
     <h2>Add A Group:</h2>
     <br><hr>
     <form class="row" action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST">
-        <div class="form-group row">
-            <div class="col-xs-12 mb-3">
-                <label for="role" class="form-label">Semester</label>
+        <div class="form-group row mb-2">
+            <div class="col-xs-12">
+            <div class="input-group col-md-6 col-xs-12">
+                <span class="input-group-text">Semester</span>
                 <select class="form-select" name="sem" id="role" required>
                     <option >I</option>
                     <option >II</option>
@@ -65,11 +66,13 @@
                     <option >VIII</option>
                 </select>
             </div>
+            </div>
         </div>
     
-        <div class="form-group row my-3">
-        <div class="col-xs-12 mb-3">
-          <label for="role" class="form-label">Year</label>
+        <div class="form-group row mb-2">
+        <div class="col-xs-12">
+        <div class="input-group col-md-6 col-xs-12">
+          <span class="input-group-text">Year</span>
           <select class="form-select" name="year" id="role" required>
               <option >SE</option>
               <option >TE</option>
@@ -77,8 +80,9 @@
           </select>
         </div>
         </div>
+        </div>
 
-        <div class="form-group row my-2">
+        <div class="form-group row mb-2">
             <div class="input-group col-md-6 col-xs-12">
                 <span class="input-group-text">Project Title</span>
                 <input type="text" name="title" class="form-control" required>
@@ -102,6 +106,7 @@
     }
 ?>
         <!-- <div class="form-group row my-2">
+        <div class="form-group row mb-2">
             <div class="input-group">
                 <span class="input-group-text">Moodle IDs of members</span>
                 <input type="text" maxlength="8" name="moodleid[]" class="form-control moodle" required>
@@ -115,8 +120,9 @@
             </div>
         </div> -->
         <div class="form-group row">
-
-            <div class="col-xs-12 my-3">
+        </div>
+        <div class="form-group row mb-2">
+            <div class="col-xs-12">
                 <button type="submit" name="moodlesubmit" class="w-100 btn btn-outline-info">Submit</button>
             </div>
         </div>

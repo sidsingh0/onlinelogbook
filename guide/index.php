@@ -21,7 +21,8 @@ include("../includes/conditions.php");
     <div>
         <h3 class="my-3">Groups Under You:</h3>
         <br/>
-        <table class="table table-bordered border-secondary">
+        <div style="border-radius:6px;overflow:hidden;border:0.2px solid grey">
+        <table class="table table-bordered border-secondary rounded-2 my-0">
             <tr>
 
                 <th>Group No.</th>
@@ -58,6 +59,7 @@ include("../includes/conditions.php");
 
 
         </table>
+        </div>
     </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
