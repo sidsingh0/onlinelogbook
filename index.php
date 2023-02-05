@@ -1,6 +1,11 @@
 <!doctype html>
 <?php 
   include("./includes/connect.php");
+  
+  function get_token($username){
+    $token=md5(date("l").$username.date("d"));
+    return $token;
+  }
 ?>
 <html lang="en" data-bs-theme="dark">
   <head>
@@ -111,6 +116,7 @@ body {
           session_start();
           setcookie("username", $username, time() + 3600);
           setcookie("role", $result["role"], time() + 3600);
+          setcookie("token",get_token($username), time()+3600);
           header("Location: /logbook_online/onlinelogbook/change-password.php");
         }
         else{
@@ -118,6 +124,7 @@ body {
           session_start();
           setcookie("username", $username, time() + 3600);
           setcookie("role", $result["role"], time() + 3600);
+          setcookie("token",get_token($username), time()+3600);
           header("Location: /logbook_online/onlinelogbook/check-user.php");
         }else{
           $msg = "Password is Incorrect";
