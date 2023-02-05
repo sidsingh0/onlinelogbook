@@ -85,16 +85,35 @@
             </div>
 
         </div>
+<?php 
+    $i=1;
+    while($i < 5){
+        echo '
+        <div class="mb-3 row mt-5">
+            <label for="inputPassword" class="col-sm-2 col-form-label">Team Member '.$i.':</label>
+            <div class="col-sm-10">
+                <input type="text" maxlength="8" name="moodleid[]" class="form-control moodle" id="inputPassword">
+            </div>
+            <div class="mt-4 text-center">
 
-        <div class="form-group row my-2">
+            </div>
+        </div>';
+        $i++;
+    }
+?>
+        <!-- <div class="form-group row my-2">
             <div class="input-group">
                 <span class="input-group-text">Moodle IDs of members</span>
-                <input type="text" maxlength="8" name="moodleid[]" class="form-control" required>
-                <input type="text" maxlength="8" name="moodleid[]" class="form-control" required>
-                <input type="text" maxlength="8" name="moodleid[]" class="form-control" required>
-                <input type="text" maxlength="8" name="moodleid[]" class="form-control" required>
+                <input type="text" maxlength="8" name="moodleid[]" class="form-control moodle" required>
+                <span></span>
+                <input type="text" maxlength="8" name="moodleid[]" class="form-control moodle" required>
+                <span></span>
+                <input type="text" maxlength="8" name="moodleid[]" class="form-control moodle" required>
+                <span></span>
+                <input type="text" maxlength="8" name="moodleid[]" class="form-control moodle" required>
+                <span></span>
             </div>
-        </div>
+        </div> -->
         <div class="form-group row">
 
             <div class="col-xs-12 my-3">
@@ -106,7 +125,21 @@
     <hr>
     </div>
     
-
+    <script>
+        $('.moodle').on("input",function () {
+            let curr = $(this);
+            $.ajax({
+                    type: "GET",
+                    url:'/logbook_online/onlinelogbook/api_hidden_url/we_need_name.php?u='+this.value,
+                    success: function(response) {
+                        response = JSON.stringify(response);
+                        response = JSON.parse(response);
+                        let text = "Name: " + response.msg;
+                        curr.closest('div').next('div').text(text);     
+                    },      
+                });
+        });
+    </script>
 
 
 
