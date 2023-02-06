@@ -106,7 +106,7 @@ body {
     $msg="";
     
 
-    if(isset($_POST["username"])){
+    if(isset($_POST["submit"])){
       $username = $_POST["username"];
       $password = $_POST["password"];
      
@@ -156,7 +156,7 @@ body {
       <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
       <label for="password">Password</label>
     </div>
-    <button class="w-100 btn btn-lg btn-outline-info" type="submit">Sign in</button>
+    <button class="w-100 btn btn-lg btn-outline-info" name="submit" type="submit">Sign in</button>
     <p class="mt-4 mb-3 text-muted">&copy; APSIT – 2023</p>
   </form>
 </main>

@@ -100,35 +100,12 @@
             </div>
             <div class="mt-4 text-center">
 
-<<<<<<< HEAD
-        <div class="form-group row my-2">
-            <div class="input">
-                <span class="input-group-text ">Moodle IDs of members</span>
-                <input type="text" maxlength="8" name="moodleid[]" class="form-control " required>
-                <input type="text" maxlength="8" name="moodleid[]" class="form-control my-1" required>
-                <input type="text" maxlength="8" name="moodleid[]" class="form-control my-1" required>
-                <input type="text" maxlength="8" name="moodleid[]" class="form-control my-1" required>
-=======
             </div>
         </div>';
         $i++;
     }
 ?>
-        <!-- <div class="form-group row my-2">
-        <div class="form-group row mb-2">
-            <div class="input-group">
-                <span class="input-group-text">Moodle IDs of members</span>
-                <input type="text" maxlength="8" name="moodleid[]" class="form-control moodle" required>
-                <span></span>
-                <input type="text" maxlength="8" name="moodleid[]" class="form-control moodle" required>
-                <span></span>
-                <input type="text" maxlength="8" name="moodleid[]" class="form-control moodle" required>
-                <span></span>
-                <input type="text" maxlength="8" name="moodleid[]" class="form-control moodle" required>
-                <span></span>
->>>>>>> 82b73a964be44068a6eb53e6e3f117fe4a2038a8
-            </div>
-        </div> -->
+
         <div class="form-group row">
         </div>
         <div class="form-group row mb-2">
