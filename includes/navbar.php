@@ -24,7 +24,7 @@
               if($_COOKIE["role"] == "admin"){
                 echo '
                 <li class="nav-item mx-1">
-                  <a class="nav-link" href="/logbook_online/onlinelogbook/procord/edit-faculties.php" aria-current="page">Edit Faculties</a>
+                  <a class="nav-link" href="/logbook_online/onlinelogbook/admin/index.php" aria-current="page">Edit Faculties</a>
                 </li>
               ';
               }

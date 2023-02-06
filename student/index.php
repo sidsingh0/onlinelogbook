@@ -19,15 +19,16 @@
 <body>
     <?php include('../includes/navbar.php');?>
     <?php 
-        $sql_get = "select * from groups where student_id ='$username'";
+        $sql_get = "select * from groups where student_id =$username";
         $res_get = mysqli_query($conn, $sql_get)->fetch_assoc();
         if($res_get){
             $groupno=$res_get["groupno"];
+            $division=$res_get["division"];
             $semester=$res_get["sem"];
             $year=$res_get["year"];
             $guide_id=$res_get["guide_id"];
             $title=$res_get["title"];
-            $sql="select * from groups where groupno=$groupno";
+            $sql="select * from groups where groupno=$groupno and division='$division'";
             $result=mysqli_query($conn, $sql);
         }else{
             echo "<center>Please wait for a guide to add you!</center>";
@@ -85,6 +86,7 @@
             while($res=$res_log->fetch_assoc()){
                 $startdate = date("d-m-Y", strtotime($res['date_from']));
                 $enddate = date("d-m-Y", strtotime($res['date_to']));
+                $enddate = date("d-m-Y", strtotime($enddate.' + 5 days'));
                 $currDate = date('d-m-Y');
                 $currDate=date('d-m-Y', strtotime($currDate));
                 if (($currDate >= $startdate) && ($currDate <= $enddate)){ 
@@ -95,8 +97,8 @@
 
                     } else{
                         echo '
-                        <div class="card">
-                            <a class="text-white" href="add-log.php?log='. $res["log_no"] .'&sem='. $semester .'&date='. $currDate .'" ><div class="card-body">
+                        <div class="card my-3">
+                            <a class="text-white" href="add-log.php?log='. $res["log_no"] .'&sem='. $semester .'&date='. $currDate .'&start='.$startdate.'&end='.$enddate.'" ><div class="card-body">
                                 Log # '. $res["log_no"] .' shall be uploaded by '. $enddate .' 
                             </div></a>
                         </div>';

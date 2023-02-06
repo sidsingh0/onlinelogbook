@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 05, 2023 at 09:19 AM
+-- Generation Time: Feb 06, 2023 at 06:28 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -34,30 +34,24 @@ CREATE TABLE `groups` (
   `guide_id` varchar(15) NOT NULL,
   `sem` varchar(15) NOT NULL,
   `year` varchar(10) NOT NULL,
-  `title` text NOT NULL
+  `title` text NOT NULL,
+  `division` varchar(5) NOT NULL DEFAULT 'A'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `groups`
 --
 
-INSERT INTO `groups` (`id`, `groupno`, `student_id`, `guide_id`, `sem`, `year`, `title`) VALUES
-(7, 1, '20102109', '20102176', 'V', 'TE', 'Hello World'),
-(8, 1, '20102109', '20102176', 'V', 'TE', 'Hello World'),
-(9, 1, '20102109', '20102176', 'V', 'TE', 'Hello World'),
-(10, 1, '20102109', '20102176', 'V', 'TE', 'Hello World'),
-(11, 2, '20102137', '20102176', 'IV', 'SE', 'Bye World'),
-(12, 2, '20102137', '20102176', 'IV', 'SE', 'Bye World'),
-(13, 2, '20102137', '20102176', 'IV', 'SE', 'Bye World'),
-(14, 2, '20102137', '20102176', 'IV', 'SE', 'Bye World'),
-(15, 3, '20102125', '20102176', 'V', 'TE', 'Wow MOMOS'),
-(16, 3, '20102125', '20102176', 'V', 'TE', 'Wow MOMOS'),
-(17, 3, '20102125', '20102176', 'V', 'TE', 'Wow MOMOS'),
-(18, 3, '20102125', '20102176', 'V', 'TE', 'Wow MOMOS'),
-(19, 4, '20102095', '20102095', 'V', 'TE', 'Ev Startup'),
-(20, 4, '20102095', '20102095', 'V', 'TE', 'Ev Startup'),
-(21, 4, '20102095', '20102095', 'V', 'TE', 'Ev Startup'),
-(22, 4, '20102095', '20102095', 'V', 'TE', 'Ev Startup');
+INSERT INTO `groups` (`id`, `groupno`, `student_id`, `guide_id`, `sem`, `year`, `title`, `division`) VALUES
+(1, 1, '20102095', '20102176', 'V', 'TE', 'handwritten notes generator', 'A'),
+(2, 1, '20102125', '20102176', 'V', 'TE', 'handwritten notes generator', 'A'),
+(3, 1, '20102125', '20102176', 'V', 'TE', 'handwritten notes generator', 'A'),
+(5, 1, '20102109', '20102176', 'V', 'TE', 'rust programming', 'B'),
+(6, 1, '20102109', '20102176', 'V', 'TE', 'rust programming', 'B'),
+(7, 1, '20102109', '20102176', 'V', 'TE', 'rust programming', 'B'),
+(8, 1, '20102176', '20102176', 'III', 'SE', 'sssss', 'A'),
+(9, 1, '20102176', '20102176', 'III', 'SE', 'sssss', 'A'),
+(10, 1, '20102176', '20102176', 'III', 'SE', 'sssss', 'A');
 
 -- --------------------------------------------------------
 
@@ -73,17 +67,17 @@ CREATE TABLE `log_content` (
   `progress_planned` text NOT NULL,
   `progress_achieved` text NOT NULL,
   `guide_review` text NOT NULL,
-  `date` date NOT NULL
+  `date` date NOT NULL,
+  `year` varchar(10) NOT NULL,
+  `division` varchar(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `log_content`
 --
 
-INSERT INTO `log_content` (`id`, `sem`, `groupno`, `log_no`, `progress_planned`, `progress_achieved`, `guide_review`, `date`) VALUES
-(8, 'V', 1, 1, 'project topic socha', 'ho gaya\r\n', 'very good', '2023-02-04'),
-(9, 'V', 1, 2, 'done work', 'maja aya', 'nice work', '2023-02-04'),
-(10, 'V', 1, 3, 'nice work done', 'hello', 'good work again', '2023-02-04');
+INSERT INTO `log_content` (`id`, `sem`, `groupno`, `log_no`, `progress_planned`, `progress_achieved`, `guide_review`, `date`, `year`, `division`) VALUES
+(1, 'V', 1, 1, 'hello', 'h', 'ok1', '2023-02-06', 'TE', 'B');
 
 -- --------------------------------------------------------
 
@@ -108,7 +102,11 @@ INSERT INTO `log_creation` (`id`, `log_no`, `year`, `sem`, `date_from`, `date_to
 (1, 1, 'TE', 'V', '2023-02-02', '2023-02-10'),
 (2, 2, 'SE', 'IV', '2023-02-18', '2023-02-25'),
 (3, 2, 'TE', 'V', '2023-02-02', '2023-02-06'),
-(4, 3, 'TE', 'V', '2023-02-03', '2023-02-05');
+(4, 3, 'TE', 'V', '2023-02-03', '2023-02-05'),
+(5, 4, 'TE', 'V', '2023-02-05', '2023-02-07'),
+(6, 5, 'TE', 'V', '2023-02-05', '2023-02-17'),
+(7, 6, 'TE', 'V', '2023-02-05', '2023-02-15'),
+(8, 7, 'TE', 'V', '2023-02-07', '2023-02-10');
 
 -- --------------------------------------------------------
 
@@ -173,10 +171,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`username`, `password`, `role`) VALUES
 ('20102095', '1234', 'guide'),
-('20102109', '1234', 'student'),
-('20102125', '1234', 'admin'),
-('20102137', '1234', 'proco'),
-('20102176', '1234', 'guide');
+('20102109', '$2y$10$spmMpkodB0w.aqNWR4gHNOHIGraEzB6UDnC6Z0Q5U2BTQm14H7gxW', 'student'),
+('20102125', '$2y$10$xazcHnsBDlToScO8PIts5.CbWVL4WoAjEmBzqbW5yipYQvvIT0S4q', 'admin'),
+('20102137', '$2y$10$xD1wFJJucDUoi53zgm8V3e7gwOJH09haI.59VyWVadN5Cl57To..a', 'proco'),
+('20102176', '$2y$10$T4MouvBpIy8nnd6Io7dhVOj/Y7mPQkHtGDh5wCAIPCaeVC18DsZfe', 'guide');
 
 --
 -- Indexes for dumped tables
@@ -228,19 +226,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `log_content`
 --
 ALTER TABLE `log_content`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `log_creation`
 --
 ALTER TABLE `log_creation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `procos`

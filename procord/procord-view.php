@@ -52,21 +52,21 @@
                   <th>Logs Filled</th>
                   <th>View Logs</th>
                 </tr>";
-                $sql_guide_get = "select * from groups where guide_id='$guide_id' and sem='$semester' group by groupno";
+                $sql_guide_get = "select * from groups where guide_id='$guide_id' and sem='$semester'group by groupno , year, division";
                 $res_guide_get = mysqli_query($conn, $sql_guide_get);
-                $i=1;
                 while($r=$res_guide_get->fetch_assoc()){
                   $group_no = $r['groupno'];
+                  $division=$r['division'];
+                  $year_of = $r['year'];
                   $title = $r['title'];
-                  $sql_log_get = "select count(*) as count from log_content where groupno=$group_no";
+                  $sql_log_get = "select count(*) as count from log_content where (groupno=$group_no and year='$year_of') and (division='$division')";
                   $res_log_get = mysqli_query($conn, $sql_log_get)->fetch_assoc();
                   echo "
-                  <td>".$i." </td>
+                  <td>".$r["year"]." ".$r["division"]."". $group_no." </td>
                   <td>".$title." </td>
                   <td class='". (($res_log_get["count"] >= 6) ? 'bg-success':'bg-danger') ." fw-bold'>". $res_log_get["count"] ." </td>
-                  <td><a href='view-logs.php?groupno=$group_no'>View</a></td>
+                  <td><a href='view-logs.php?groupno=".$group_no."&year=".$r["year"]."&div=".$r["division"]."'>View</a></td>
                   </tr>";
-                  $i++;
                 }
             }
             ?>

@@ -19,35 +19,58 @@
 </head>
 <body>
     <?php include('../includes/navbar.php')?>
+    
+    <div class="container my-5">
     <?php
-    $group_no = 0;
-    $sql_select = "select max(groupno) as group_no from groups";
-    $result = mysqli_query($conn, $sql_select);
-    if($result){
-        while ($data = $result->fetch_assoc()) {
-            // echo var_dump($data);
-            $group_no = $data['group_no'] ;
-            // echo $group_no;
-        }
-    }
 
-    $group_no = $group_no + 1;
     if (isset($_POST['moodlesubmit'])) {
+        $division=$_POST["division"];
+        $year = $_POST["year"];
+        $group_no = 0;
+        $sql_select = "select max(groupno) as group_no from groups where division='$division' and year='$year'";
+        $result = mysqli_query($conn, $sql_select);
+        if($result){
+            while ($data = $result->fetch_assoc()) {
+                $group_no = $data['group_no'] ;
+            }
+        }
+        $group_no = $group_no + 1;
         $guide_id = $username; 
         $title = $_POST['title'];
         $sem = $_POST["sem"];
-        $year = $_POST["year"];
         $moodle_array = $_POST['moodleid'];
+        $can_add = true;
         foreach ($moodle_array as $moodleid) {
-            $sql_insert = "insert into groups(groupno,guide_id,student_id,sem,year,title) values($group_no,$username,'$moodleid','$sem','$year','$title')";
-            $inserted = mysqli_query($conn, $sql_insert) or die(mysqli_error($conn));
+            $check_grp_exist = "select * from groups where student_id=$moodleid";
+            $res_grp_exist = mysqli_query($conn, $check_grp_exist);
+            if(mysqli_num_rows($res_grp_exist) > 0){
+                $res_grp_exist = $res_grp_exist->fetch_assoc();
+                $can_add = false;
+                $guide=$res_grp_exist["guide_id"];
+                $guide_query = "select * from userinfo where username=$guide";
+                $res_guide = mysqli_query($conn, $guide_query)->fetch_assoc();
+                echo '<div class="alert alert-primary alert-dismissible fade show" role="alert">
+                    <strong>('.$moodleid.') Student Already in a group!</strong> Guide Name: <b>'. $res_guide["name"] .'</b> Contact: '. $res_guide["mobile_no"] .'
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>';
+                break;
+            }else{
+                break;
+            }
+        }
+        if($can_add){
+            foreach($moodle_array as $moodleid){
+                if(!($moodleid == "")){
+                    $sql_insert = "insert into groups(groupno,guide_id,student_id,sem,year,title,division) values($group_no,$username,'$moodleid','$sem','$year','$title','$division')";
+                    $inserted = mysqli_query($conn, $sql_insert) or die("Maybe the moodle ids added by you were invalid!");
+                }
+            }
         }
     }
 
     ?>
 
 
-    <div class="container my-5">
     <h2>Add A Group:</h2>
     <br><hr>
     <form class="row" action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST">
@@ -55,9 +78,7 @@
             <div class="col-xs-12">
             <div class="input-group col-md-6 col-xs-12">
                 <span class="input-group-text">Semester</span>
-                <select class="form-select" name="sem" id="role" required>
-                    <option >I</option>
-                    <option >II</option>
+                <select class="form-select" name="sem" id="semcheck" oninput="setYearFromSem(this);" required>
                     <option >III</option>
                     <option >IV</option>
                     <option >V</option>
@@ -70,16 +91,25 @@
         </div>
     
         <div class="form-group row mb-2">
-        <div class="col-xs-12">
-        <div class="input-group col-md-6 col-xs-12">
-          <span class="input-group-text">Year</span>
-          <select class="form-select" name="year" id="role" required>
-              <option >SE</option>
-              <option >TE</option>
-              <option >BE</option>
-          </select>
+            <div class="col-xs-12">
+                <div class="input-group col-md-6 col-xs-12">
+                <span class="input-group-text">Year</span>
+                <input class="form-control" value="SE" name="year" id="yearcheck" readonly>
+                </div>
+            </div>
         </div>
-        </div>
+
+        <div class="form-group row mb-2">
+            <div class="col-xs-12">
+                <div class="input-group col-md-6 col-xs-12">
+                <span class="input-group-text">Division</span>
+                <select class="form-select" name="division" id="division" required>
+                    <option >A</option>
+                    <option >B</option>
+                    <option >C</option>
+                </select>
+                </div>
+            </div>
         </div>
 
         <div class="form-group row mb-2">
@@ -89,21 +119,54 @@
             </div>
 
         </div>
-<?php 
-    $i=1;
-    while($i < 5){
-        echo '
         <div class="mb-3 row mt-5">
-            <label for="inputPassword" class="col-sm-2 col-form-label">Team Member '.$i.':</label>
+            <label for="inputPassword" class="col-sm-2 col-form-label">Team Member 1 (Leader):</label>
+            <div class="col-sm-10">
+                <input type="text" maxlength="8" name="moodleid[]" class="form-control moodle" id="inputPassword" required>
+            </div>
+            <div class="mt-4 text-center">
+            </div>
+        </div>
+        <div class="mb-3 row mt-5">
+            <label for="inputPassword" class="col-sm-2 col-form-label">Team Member 2:</label>
+            <div class="col-sm-10">
+                <input type="text" maxlength="8" name="moodleid[]" class="form-control moodle" id="inputPassword" required>
+            </div>
+            <div class="mt-4 text-center">
+            </div>
+        </div>
+        <div class="mb-3 row mt-5">
+            <label for="inputPassword" class="col-sm-2 col-form-label">Team Member 3:</label>
+            <div class="col-sm-10">
+                <input type="text" maxlength="8" name="moodleid[]" class="form-control moodle" id="inputPassword" required>
+            </div>
+            <div class="mt-4 text-center">
+            </div>
+        </div>
+        <div class="mb-3 row mt-5">
+            <label for="inputPassword" class="col-sm-2 col-form-label">Team Member 4 (Optional):</label>
             <div class="col-sm-10">
                 <input type="text" maxlength="8" name="moodleid[]" class="form-control moodle" id="inputPassword">
             </div>
             <div class="mt-4 text-center">
-
             </div>
-        </div>';
-        $i++;
-    }
+        </div>
+        
+<?php 
+    // $i=1;
+    // while($i < 5){
+    //     echo '
+    //     <div class="mb-3 row mt-5">
+    //         <label for="inputPassword" class="col-sm-2 col-form-label">Team Member '.$i.':</label>
+    //         <div class="col-sm-10">
+    //             <input type="text" maxlength="8" name="moodleid[]" class="form-control moodle" id="inputPassword">
+    //         </div>
+    //         <div class="mt-4 text-center">
+
+    //         </div>
+    //     </div>';
+    //     $i++;
+    // }
 ?>
         <!-- <div class="form-group row my-2">
         <div class="form-group row mb-2">
@@ -132,6 +195,18 @@
     </div>
     
     <script>
+        function setYearFromSem(sem){
+            let a = sem.value;
+            if(a === "III" || a === "IV"){
+                $("#yearcheck").val("SE");
+            }else if(a === "V" || a === "VI"){
+                $("#yearcheck").val("TE");
+            }else{
+                $("#yearcheck").val("BE");
+            }
+            
+        }
+        
         $('.moodle').on("input",function () {
             let curr = $(this);
             $.ajax({

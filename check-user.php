@@ -9,7 +9,7 @@ if(isset($_COOKIE["role"])){
     }else if($role == "proco"){
         header("Location: /logbook_online/onlinelogbook/procord/index.php");
     }else if($role == "admin"){
-        header("Location: /logbook_online/onlinelogbook/procord/edit-faculties.php");
+        header("Location: /logbook_online/onlinelogbook/admin/index.php");
     }
 }else{
     header("Location: /logbook_online/onlinelogbook/index.php");

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <?php 
+
     include("../includes/conditions.php");
     if ($_COOKIE['role']!='student'){
         header("Location: /logbook_online/onlinelogbook/logout.php?logout=true");
@@ -26,13 +27,21 @@
             exit;
         }else{
             $groupno = $res_get["groupno"];
+            $year_of=$res_get["year"];
+            $div_of=$res_get["division"];
         }
 
         if(isset($_GET["sem"])){
-            $semester = $_GET["sem"];
+            $startdate = date('Y-m-d',strtotime($_GET["start"]));
+            $enddate = date('Y-m-d',strtotime($_GET["end"]));
             $currDate = $_GET["date"];
             $currDate=date('Y-m-d', strtotime($currDate));
-            $logno = $_GET["log"];
+            if(($currDate >= $startdate) && ($currDate <= $enddate)){ 
+                $semester = $_GET["sem"];
+                $logno = $_GET["log"];
+            }else{
+                header("Location: /logbook_online/onlinelogbook/student/index.php");
+            }
         }else{
             header("Location: /logbook_online/onlinelogbook/student/index.php");
         }
@@ -45,6 +54,14 @@
 
         <div class="col-sm-4">
             <input type="hidden" class="form-control" id="semester" value="<?php echo $semester; ?>" name="semester" readonly>
+        </div>
+
+        <div class="col-sm-4">
+            <input type="hidden" class="form-control" id="year" value="<?php echo $year_of; ?>" name="year" readonly>
+        </div>
+
+        <div class="col-sm-4">
+            <input type="hidden" class="form-control" id="div" value="<?php echo $div_of; ?>" name="div" readonly>
         </div>
 
         <div class="col-sm-4">
@@ -87,7 +104,9 @@
               $plannedprog= $_POST['plannedprog'];
               $achievedprog= $_POST['achievedprog'];
               $date= $_POST['date'];
-              $query= "insert into log_content (sem,groupno,log_no,progress_planned,progress_achieved,date) values ('$sem',$groupno,$logno,'$plannedprog','$achievedprog','$date')";
+              $year= $_POST["year"];
+              $division= $_POST["div"];
+              $query= "insert into log_content (sem,groupno,log_no,progress_planned,progress_achieved,date,year,division) values ('$sem',$groupno,$logno,'$plannedprog','$achievedprog','$date', '$year','$division')";
               $result= mysqli_query($conn,$query) or die(mysqli_error($conn));
           };
     
