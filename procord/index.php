@@ -1,10 +1,8 @@
 <?php
   include("../includes/connect.php");
   include("../includes/conditions.php");
-  if($_COOKIE["role"] == "proco"){
-    $role = $_COOKIE["role"];
-  }else{
-    header("Location: ". $_SERVER["HTTP_REFERER"]);
+  if ($_COOKIE['role']!='proco'){
+    header("Location: /logbook_online/onlinelogbook/logout.php?logout=true");
   }
 ?>
 
@@ -53,8 +51,9 @@
     <?php include('../includes/navbar.php')?>
     
       <div class="container my-5">
-        <h2>Add Logs for Users:</h2>
+        
       <div class="container my-4">
+      <h2>Add Logs for Users:</h2>
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="POST">
           <div class="row g-3">
 
@@ -99,9 +98,10 @@
           </div>
 
         </form>
+        <hr>
       </div>
 
-      <hr>
+      
 
       <div class="container">
         <h2 class="my-4">Previously Created Logs: </h2>
