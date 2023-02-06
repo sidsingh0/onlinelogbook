@@ -28,7 +28,7 @@
     $sem_proco = $result["sem"];
     $year_proco = $result["year"];
 
-    if (isset($_POST['semester'])){
+    if (isset($_POST['submit'])){
         $semester= $_POST['semester'];
         $startdate= $_POST['startdate'];
         $enddate= $_POST['enddate'];
