@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
-include("../includes/conditions.php"); 
-if ($_COOKIE['role']!='guide'){
+include("../includes/conditions.php");
+if ($_COOKIE['role'] != 'guide') {
     header("Location: /logbook_online/onlinelogbook/logout.php?logout=true");
 }
 ?>
@@ -20,13 +20,15 @@ if ($_COOKIE['role']!='guide'){
     <?php include("../includes/connect.php"); ?>
     <?php include("../includes/navbar.php"); ?>
 
-<div class="container my-5">
-    <div>
-        <h3 class="my-3">Groups Under You:</h3>
-        <br/>
-        <div style="border-radius:6px;overflow:hidden;border:0.2px solid grey">
-        <table class="table table-bordered border-secondary rounded-2 my-0">
-            <tr>
+    <div class="container my-5">
+        <div>
+            <h3 class="my-3">Groups Under You:</h3>
+            <br />
+            <div style="border-radius:6px;overflow:hidden;border:0.2px solid grey">
+                <div class="col-lg-12" style="border-radius:6px;overflow:hidden;border:0.2px solid grey">
+                    <div class="table-responsive">
+                        <table class="table table-bordered border-secondary rounded-2 my-0">
+                            <tr>
 
                 <th>Group No.</th>
                 <th>Student Id</th>
@@ -47,8 +49,8 @@ if ($_COOKIE['role']!='guide'){
                 $studentid = $data['student_id'];
                 $title = $data['title'];
 
-                $query2 = "select * from userinfo where username=" . $studentid;
-                $sdata = mysqli_query($conn, $query2)->fetch_assoc();
+                                $query2 = "select * from userinfo where username=" . $studentid;
+                                $sdata = mysqli_query($conn, $query2)->fetch_assoc();
 
                 $studentname = $sdata['name'];
                 echo "<tr>
@@ -64,9 +66,11 @@ if ($_COOKIE['role']!='guide'){
 
 
 
-        </table>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
