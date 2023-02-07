@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 06, 2023 at 06:28 PM
+-- Generation Time: Feb 07, 2023 at 05:54 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -35,23 +35,27 @@ CREATE TABLE `groups` (
   `sem` varchar(15) NOT NULL,
   `year` varchar(10) NOT NULL,
   `title` text NOT NULL,
-  `division` varchar(5) NOT NULL DEFAULT 'A'
+  `division` varchar(5) NOT NULL DEFAULT 'A',
+  `aca_year` int(10) NOT NULL DEFAULT year(current_timestamp())
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `groups`
 --
 
-INSERT INTO `groups` (`id`, `groupno`, `student_id`, `guide_id`, `sem`, `year`, `title`, `division`) VALUES
-(1, 1, '20102095', '20102176', 'V', 'TE', 'handwritten notes generator', 'A'),
-(2, 1, '20102125', '20102176', 'V', 'TE', 'handwritten notes generator', 'A'),
-(3, 1, '20102125', '20102176', 'V', 'TE', 'handwritten notes generator', 'A'),
-(5, 1, '20102109', '20102176', 'V', 'TE', 'rust programming', 'B'),
-(6, 1, '20102109', '20102176', 'V', 'TE', 'rust programming', 'B'),
-(7, 1, '20102109', '20102176', 'V', 'TE', 'rust programming', 'B'),
-(8, 1, '20102176', '20102176', 'III', 'SE', 'sssss', 'A'),
-(9, 1, '20102176', '20102176', 'III', 'SE', 'sssss', 'A'),
-(10, 1, '20102176', '20102176', 'III', 'SE', 'sssss', 'A');
+INSERT INTO `groups` (`id`, `groupno`, `student_id`, `guide_id`, `sem`, `year`, `title`, `division`, `aca_year`) VALUES
+(1, 1, '20102095', '20102176', 'V', 'TE', 'handwritten notes generator', 'A', 2023),
+(2, 1, '20102125', '20102176', 'V', 'TE', 'handwritten notes generator', 'A', 2023),
+(3, 1, '20102125', '20102176', 'V', 'TE', 'handwritten notes generator', 'A', 2023),
+(5, 1, '20102109', '20102176', 'V', 'TE', 'rust programming', 'B', 2023),
+(6, 1, '20102109', '20102176', 'V', 'TE', 'rust programming', 'B', 2023),
+(7, 1, '20102109', '20102176', 'V', 'TE', 'rust programming', 'B', 2023),
+(8, 1, '20102176', '20102176', 'III', 'SE', 'sssss', 'A', 2023),
+(9, 1, '20102176', '20102176', 'III', 'SE', 'sssss', 'A', 2023),
+(10, 1, '20102176', '20102176', 'III', 'SE', 'sssss', 'A', 2023),
+(11, 1, '20102109', '20102176', 'VII', 'BE', 'automation', ' ', 2023),
+(12, 1, '20102109', '20102176', 'VII', 'BE', 'automation', ' ', 2023),
+(13, 1, '20102109', '20102176', 'VII', 'BE', 'automation', ' ', 2023);
 
 -- --------------------------------------------------------
 
@@ -69,15 +73,16 @@ CREATE TABLE `log_content` (
   `guide_review` text NOT NULL,
   `date` date NOT NULL,
   `year` varchar(10) NOT NULL,
-  `division` varchar(5) NOT NULL
+  `division` varchar(5) NOT NULL,
+  `aca_year` int(10) NOT NULL DEFAULT year(current_timestamp())
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `log_content`
 --
 
-INSERT INTO `log_content` (`id`, `sem`, `groupno`, `log_no`, `progress_planned`, `progress_achieved`, `guide_review`, `date`, `year`, `division`) VALUES
-(1, 'V', 1, 1, 'hello', 'h', 'ok1', '2023-02-06', 'TE', 'B');
+INSERT INTO `log_content` (`id`, `sem`, `groupno`, `log_no`, `progress_planned`, `progress_achieved`, `guide_review`, `date`, `year`, `division`, `aca_year`) VALUES
+(1, 'V', 1, 1, 'first log we planned some topicsshowed it our guidehe liked it', 'first log we planned some topicsshowed it our guidehe liked it', 'hehhehe', '2023-02-07', 'TE', 'B', 2023);
 
 -- --------------------------------------------------------
 
@@ -91,22 +96,23 @@ CREATE TABLE `log_creation` (
   `year` varchar(15) NOT NULL,
   `sem` varchar(10) NOT NULL,
   `date_from` date NOT NULL,
-  `date_to` date NOT NULL
+  `date_to` date NOT NULL,
+  `aca_year` int(10) NOT NULL DEFAULT year(current_timestamp())
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `log_creation`
 --
 
-INSERT INTO `log_creation` (`id`, `log_no`, `year`, `sem`, `date_from`, `date_to`) VALUES
-(1, 1, 'TE', 'V', '2023-02-02', '2023-02-10'),
-(2, 2, 'SE', 'IV', '2023-02-18', '2023-02-25'),
-(3, 2, 'TE', 'V', '2023-02-02', '2023-02-06'),
-(4, 3, 'TE', 'V', '2023-02-03', '2023-02-05'),
-(5, 4, 'TE', 'V', '2023-02-05', '2023-02-07'),
-(6, 5, 'TE', 'V', '2023-02-05', '2023-02-17'),
-(7, 6, 'TE', 'V', '2023-02-05', '2023-02-15'),
-(8, 7, 'TE', 'V', '2023-02-07', '2023-02-10');
+INSERT INTO `log_creation` (`id`, `log_no`, `year`, `sem`, `date_from`, `date_to`, `aca_year`) VALUES
+(1, 1, 'TE', 'V', '2023-02-02', '2023-02-10', 2023),
+(2, 2, 'SE', 'IV', '2023-02-18', '2023-02-25', 2023),
+(3, 2, 'TE', 'V', '2023-02-02', '2023-02-06', 2023),
+(4, 3, 'TE', 'V', '2023-02-03', '2023-02-05', 2023),
+(5, 4, 'TE', 'V', '2023-02-05', '2023-02-07', 2023),
+(6, 5, 'TE', 'V', '2023-02-05', '2023-02-17', 2023),
+(7, 6, 'TE', 'V', '2023-02-05', '2023-02-15', 2023),
+(8, 7, 'TE', 'V', '2023-02-07', '2023-02-10', 2023);
 
 -- --------------------------------------------------------
 
@@ -226,7 +232,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `log_content`
