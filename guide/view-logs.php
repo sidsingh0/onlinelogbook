@@ -5,6 +5,7 @@
     $group_no=$_GET["groupno"];
     $year_of=$_GET["year"];
     $div_of=$_GET["div"];
+    $sem=$_GET["sem"];
   }else{
     header("Location: /logbook_online/onlinelogbook/guide/index.php");
     exit;
@@ -18,7 +19,7 @@ if ($_COOKIE['role'] != 'guide') {
   if(isset($_POST["student_id"])){
     $student_id = $_POST["student_id"];
     $new_id = $_POST["username"];
-    $sql_update = "update groups set student_id=$new_id where (student_id=$student_id and year='$year_of') and (division='$div_of' and groupno=$group_no)";
+    $sql_update = "update groups set student_id=$new_id where ((student_id=$student_id and year='$year_of') and (division='$div_of' and groupno=$group_no)) and (aca_year=$aca_year and sem='$sem')";
     $res_update = mysqli_query($conn, $sql_update);
     if(!$res_update){
         exit("Moodle does not exist");
@@ -29,7 +30,7 @@ if ($_COOKIE['role'] != 'guide') {
     $guide_rev = $_POST["guide"];
     $group_no = $_POST["grpno"];
     $logno = $_POST["logno"];
-    $sql_update = "update log_content set guide_review='$guide_rev' where (log_no=$logno and division='$div_of') and (groupno=$group_no and year='$year_of')";
+    $sql_update = "update log_content set guide_review='$guide_rev' where ((log_no=$logno and division='$div_of') and (groupno=$group_no and year='$year_of')) and (aca_year=$aca_year and sem='$sem')";
     $res_update = mysqli_query($conn, $sql_update);
   }
 
@@ -65,7 +66,7 @@ if ($_COOKIE['role'] != 'guide') {
                 <th>Edit</th>
             </tr>
             <?php
-            $sql="select * from groups where (groupno=$group_no and year='$year_of') and (division='$div_of')";
+            $sql="select * from groups where ((groupno=$group_no and year='$year_of') and (division='$div_of' and aca_year=$aca_year)) and sem='$sem'";
             $result=mysqli_query($conn, $sql);
             while ($data = $result->fetch_assoc()) {
                 $studentid = $data['student_id'];
@@ -118,7 +119,7 @@ if ($_COOKIE['role'] != 'guide') {
     <h2 class="my-3">Logs Uploaded:</h2>
     <hr>
             <?php 
-            $sql_log = "select * from log_content where (groupno=$group_no and year='$year_of') and (division='$div_of')";
+            $sql_log = "select * from log_content where ((groupno=$group_no and year='$year_of') and (division='$div_of' and aca_year=$aca_year)) and sem='$sem'";
             $res_log = mysqli_query($conn, $sql_log);
             if(mysqli_num_rows($res_log) > 0){
             while($res=$res_log->fetch_assoc()){ 
@@ -152,7 +153,7 @@ if ($_COOKIE['role'] != 'guide') {
             </tr>
         </thead>
             <?php
-            $query = "select * from log_content where (groupno=$group_no and year='$year_of') and (division='$div_of') order by 'log_no'";
+            $query = "select * from log_content where ((groupno=$group_no and year='$year_of') and (division='$div_of' and aca_year=$aca_year)) and sem='$sem' order by 'log_no'";
             $result = mysqli_query($conn, $query);
             while ($data = $result->fetch_assoc()) {
                 $sem = $data['sem'];

@@ -26,8 +26,9 @@
     if (isset($_POST['moodlesubmit'])) {
         $division=$_POST["division"];
         $year = $_POST["year"];
+        $sem = $_POST["sem"];
         $group_no = 0;
-        $sql_select = "select max(groupno) as group_no from groups where division='$division' and year='$year'";
+        $sql_select = "select max(groupno) as group_no from groups where (division='$division' and year='$year') and (aca_year=$aca_year and sem='$sem')";
         $result = mysqli_query($conn, $sql_select);
         if($result){
             while ($data = $result->fetch_assoc()) {
@@ -37,11 +38,10 @@
         $group_no = $group_no + 1;
         $guide_id = $username; 
         $title = $_POST['title'];
-        $sem = $_POST["sem"];
         $moodle_array = $_POST['moodleid'];
         $can_add = true;
         foreach ($moodle_array as $moodleid) {
-            $check_grp_exist = "select * from groups where student_id=$moodleid";
+            $check_grp_exist = "select * from groups where student_id=$moodleid and sem='$sem'";
             $res_grp_exist = mysqli_query($conn, $check_grp_exist);
             if(mysqli_num_rows($res_grp_exist) > 0){
                 $res_grp_exist = $res_grp_exist->fetch_assoc();
@@ -104,6 +104,7 @@
                 <div class="input-group col-md-6 col-xs-12">
                 <span class="input-group-text">Division</span>
                 <select class="form-select" name="division" id="division" required>
+                    <option value=" ">No division</option>
                     <option >A</option>
                     <option >B</option>
                     <option >C</option>

@@ -38,7 +38,7 @@ if ($_COOKIE['role'] != 'guide') {
             </tr>
             <?php
             $guide_id = $username;
-            $query = "select * from groups where guide_id =$guide_id group by groupno , year, division;";
+            $query = "select * from groups where guide_id =$guide_id and aca_year=$aca_year group by groupno , year, division;";
             $result = mysqli_query($conn, $query);
             if(mysqli_num_rows($result) ==0){
                 echo '<tr><td colspan="5" class="text-center">No groups under you yet! Add <a href="add-group.php" >Group</a></td></tr>';
@@ -48,17 +48,16 @@ if ($_COOKIE['role'] != 'guide') {
                 $group_no = $data['groupno'];
                 $studentid = $data['student_id'];
                 $title = $data['title'];
-
-                                $query2 = "select * from userinfo where username=" . $studentid;
-                                $sdata = mysqli_query($conn, $query2)->fetch_assoc();
-
+                $sem = $data['sem'];
+                $query2 = "select * from userinfo where username=" . $studentid;
+                $sdata = mysqli_query($conn, $query2)->fetch_assoc();
                 $studentname = $sdata['name'];
                 echo "<tr>
                 <td>".$data["year"]." ".$data["division"]."". $group_no." </td>
                 <td>".$studentid." </td>
                 <td>".$studentname." </td>
                 <td>".$title." </td>
-                <td><a href='view-logs.php?groupno=".$group_no."&year=".$data["year"]."&div=".$data["division"]."'>View</a></td>
+                <td><a href='view-logs.php?groupno=".$group_no."&year=".$data["year"]."&div=".$data["division"]."&sem=".$sem."'>View</a></td>
                 </tr>";
 
             }

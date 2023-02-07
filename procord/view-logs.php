@@ -5,6 +5,7 @@
     $group_no=$_GET["groupno"];
     $year_of=$_GET["year"];
     $div_of=$_GET["div"];
+    $sem=$_GET["sem"];
   }else{
     header("Location: /logbook_online/onlinelogbook/procord/procord-view.php");
     exit;
@@ -19,12 +20,13 @@
     $guide_review = $_POST["guide_review"];
     $sql_update = "update log_content set progress_planned='$progress_planned' , progress_achieved = '$progress_achieved', guide_review='$guide_review' where id=$log_id";
     $res_update = mysqli_query($conn, $sql_update);
+
   }
 
   if(isset($_POST["student_id"])){
     $student_id = $_POST["student_id"];
     $new_id = $_POST["username"];
-    $sql_update = "update groups set student_id=$new_id where (student_id=$student_id and year='$year_of') and (division='$div_of' and groupno=$group_no)";
+    $sql_update = "update groups set student_id=$new_id where ((student_id=$student_id and year='$year_of') and (division='$div_of' and groupno=$group_no)) and (aca_year=$aca_year and sem='$sem')";
     $res_update = mysqli_query($conn, $sql_update);
     if(!$res_update){
         exit("Moodle does not exist");
@@ -48,7 +50,7 @@
 </head>
 <body>
     <?php include('../includes/navbar.php');
-    $sql="select * from groups where (groupno=$group_no and year='$year_of') and (division='$div_of')";
+    $sql="select * from groups where ((groupno=$group_no and year='$year_of') and (division='$div_of' and aca_year=$aca_year)) and sem='$sem'";
     $result=mysqli_query($conn, $sql)->fetch_assoc();
     if($result){
         $title = $result["title"];
@@ -68,7 +70,7 @@
                 <th>Edit</th>
             </tr>
             <?php
-            $sql="select * from groups where (groupno=$group_no and year='$year_of') and (division='$div_of')";
+            $sql="select * from groups where ((groupno=$group_no and year='$year_of') and (division='$div_of' and aca_year=$aca_year)) and sem='$sem'";
             $result=mysqli_query($conn, $sql);
             while ($data = $result->fetch_assoc()) {
                 $studentid = $data['student_id'];
@@ -119,7 +121,7 @@
         <h2 class="my-3">Logs Uploaded:</h2>
     <hr>
             <?php 
-            $sql_log = "select * from log_content where (groupno=$group_no and year='$year_of') and (division='$div_of')";
+            $sql_log = "select * from log_content where ((groupno=$group_no and year='$year_of') and (division='$div_of' and aca_year=$aca_year)) and sem='$sem'";
             $res_log = mysqli_query($conn, $sql_log);
             if(mysqli_num_rows($res_log) > 0){
                 while($res=$res_log->fetch_assoc()){ 
@@ -156,7 +158,7 @@
             </tr>
         </thead>
             <?php
-            $query = "select * from log_content where (groupno=$group_no and year='$year_of') and (division='$div_of') order by 'log_no'";
+            $query = "select * from log_content where ((groupno=$group_no and year='$year_of') and (division='$div_of' and aca_year=$aca_year)) and sem='$sem' order by 'log_no'";
             $result = mysqli_query($conn, $query);
             while ($data = $result->fetch_assoc()) {
                 $sem = $data['sem'];

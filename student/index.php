@@ -21,7 +21,7 @@ if ($_COOKIE['role'] != 'student') {
 <body>
     <?php include('../includes/navbar.php');?>
     <?php 
-        $sql_get = "select * from groups where student_id =$username";
+        $sql_get = "select * from groups where student_id =$username order by sem desc";
         $res_get = mysqli_query($conn, $sql_get)->fetch_assoc();
         if($res_get){
             $groupno=$res_get["groupno"];
@@ -30,7 +30,7 @@ if ($_COOKIE['role'] != 'student') {
             $year=$res_get["year"];
             $guide_id=$res_get["guide_id"];
             $title=$res_get["title"];
-            $sql="select * from groups where groupno=$groupno and division='$division'";
+            $sql="select * from groups where (groupno=$groupno and division='$division') and (aca_year=$aca_year and sem='$semester')";
             $result=mysqli_query($conn, $sql);
         }else{
             echo "<center>Please wait for a guide to add you!</center>";
@@ -49,7 +49,8 @@ if ($_COOKIE['role'] != 'student') {
         <br>
         <hr>
         <h4>Group Details:</h4>
-        <div class="col-lg-12" style="border-radius:6px;overflow:hidden;border:0.2px solid grey">
+
+        <div class="col-lg-12 my-3" style="border-radius:6px;overflow:hidden;border:0.2px solid grey">
             <div class="table-responsive">
                 <table class="table table-bordered border-secondary">
                     <tr>
@@ -60,25 +61,19 @@ if ($_COOKIE['role'] != 'student') {
                     while ($data = $result->fetch_assoc()) {
                         $studentid = $data['student_id'];
                         $title = $data['title'];
-
                         $query2 = "select * from userinfo where username=" . $studentid;
                         $sdata = mysqli_query($conn, $query2)->fetch_assoc();
-
                         $studentname = $sdata['name'];
-
                         echo "<tr>
-                <td>" . $studentid . " </td>
-                <td>" . $studentname . " </td>
-                </tr>";
+                        <td>" . $studentid . " </td>
+                        <td>" . $studentname . " </td>
+                        </tr>";
                     }
                     ?>
-
-
 
                 </table>
             </div>
         </div>
-
     </div>
 
 
@@ -87,8 +82,11 @@ if ($_COOKIE['role'] != 'student') {
         <h2 class="my-3">Logs Pending:</h2>
         <hr>
         <?php
-        $sql_log = "select * from log_creation where sem='$semester' and year='$year'";
+        $sql_log = "select * from log_creation where (sem='$semester' and year='$year') and (aca_year=$aca_year)";
         $res_log = mysqli_query($conn, $sql_log);
+        if(mysqli_num_rows($res_log) < 1){
+            echo "No logs pending";
+        }
 
             while($res=$res_log->fetch_assoc()){
                 $startdate = date("d-m-Y", strtotime($res['date_from']));
@@ -98,7 +96,7 @@ if ($_COOKIE['role'] != 'student') {
                 $currDate=date('d-m-Y', strtotime($currDate));
                 if (($currDate >= $startdate) && ($currDate <= $enddate)){ 
                     $log_no = $res["log_no"];
-                    $sql_log_content = "select * from log_content where log_no=$log_no and groupno=$groupno";
+                    $sql_log_content = "select * from log_content where ((log_no=$log_no and groupno=$groupno) and (aca_year=$aca_year and sem='$semester')) and division='$division'";
                     $res_log_content = mysqli_query($conn, $sql_log_content) or die(mysqli_error($conn));   
                     if($res_log_content->fetch_assoc()){
 
@@ -135,7 +133,7 @@ if ($_COOKIE['role'] != 'student') {
                             </tr>
                         </thead>
                         <?php
-                        $query = "select * from log_content where groupno=$groupno order by 'log_no'";
+                        $query = "select * from log_content where (groupno=$groupno and sem='$semester') and (aca_year=$aca_year and division='$division') order by 'log_no'";
                         $result = mysqli_query($conn, $query);
                         while ($data = $result->fetch_assoc()) {
                             $sem = $data['sem'];
