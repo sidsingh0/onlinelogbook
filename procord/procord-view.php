@@ -37,6 +37,7 @@ if ($_COOKIE['role'] != 'proco') {
       <div id="datatable" class="table-responsive">
 
         <table id="table" class="table table-bordered border-secondary">
+          <thead>
           <?php
           // $query = "SELECT g.groupno, g.title, g.sem, u.name, u.username from groups g JOIN userinfo u ON g.guide_id = u.username WHERE g.sem='$semester' and g.year='$year' group BY g.guide_id, g.groupno;";
           $query = "select u.name, g.guide_id from groups g JOIN userinfo u ON g.guide_id=u.username where (g.sem='$semester' and g.year='$year') and aca_year=$aca_year group by g.guide_id";
@@ -48,34 +49,51 @@ if ($_COOKIE['role'] != 'proco') {
                 <tr>
                   <th>Guide Name</th>
                   <th>Group No.</th>
+                  <th>Student Name</th>
                   <th>Project Title</th>
                   <th>Logs Filled</th>
-                  <th class='no'>View Logs</th>
-                </tr>";
+                  <th>View Logs</th>
+                </tr></thead><tbody>";
                 
                 $sql_guide_get = "select * from groups where (guide_id='$guide_id' and sem='$semester') and aca_year=$aca_year group by groupno , year, division";
                 $res_guide_get = mysqli_query($conn, $sql_guide_get);
                 $count = mysqli_num_rows($res_guide_get);
-                echo "<th class='text-center' rowspan='".$count."'>" . $guidename . " </th>";
                 while($r=$res_guide_get->fetch_assoc()){
                   $group_no = $r['groupno'];
+                  $id_grp = $r['id'];
                   $division=$r['division'];
                   $year_of = $r['year'];
                   $title = $r['title'];
                   $sql_log_get = "select count(*) as count from log_content where ((groupno=$group_no and year='$year_of') and (division='$division' and aca_year=$aca_year)) and sem='$semester'";
                   $res_log_get = mysqli_query($conn, $sql_log_get)->fetch_assoc();
+                  $sql_grp_get = "select * from groups where ((groupno=$group_no and year='$year_of') and (division='$division' and aca_year=$aca_year)) and sem='$semester'";
+                  $res_grp_get = mysqli_query($conn, $sql_grp_get);
+                  $count = mysqli_num_rows($res_guide_get);
+                  $count_inner = mysqli_num_rows($res_grp_get);
                   echo "
-                  <td>".$r["year"]." ".$r["division"]."". $group_no." </td>";
-                  
-                  echo "<td>".$title." </td>
-                  <td class='". (($res_log_get["count"] >= 6) ? 'bg-success':'bg-danger') ." fw-bold'>". $res_log_get["count"] ." </td>
-                  <td class='no'><a href='view-logs.php?groupno=".$group_no."&year=".$r["year"]."&div=".$r["division"]."&sem=".$semester."'>View</a></td>
+                  <tr>
+                  <td class='text-center fw-bold' rowspan='".$count_inner."'>" . $guidename . " </td>
+                  <td rowspan='$count_inner'>".$r['year']." ".$r['division']."". $group_no." </td>
+                  <td rowspan='$count_inner'>";
+                  while($grp_st=$res_grp_get->fetch_assoc()){
+                    $sql_inner="select * from userinfo where username=".$grp_st['student_id'];
+                    $res_inner=mysqli_query($conn, $sql_inner)->fetch_assoc();
+                    echo $res_inner['name'] . "<br>";
+                  }
+                  echo "</td>
+                  <td rowspan='$count_inner'>".$title." </td>
+                  <td rowspan='$count_inner' class='". (($res_log_get["count"] >= 6) ? 'bg-success':'bg-danger') ." fw-bold'>". $res_log_get["count"] ." </td>
+                  <td rowspan='$count_inner'><a href='view-logs.php?groupno=".$group_no."&year=".$r["year"]."&div=".$r["division"]."&sem=".$semester."'>View</a></td>
                   </tr>";
+                  for($i=0;$i<$count_inner-1;$i++){
+                    echo "<tr></tr>";
+                  };
                 }
+                
             }
           
           ?>
-
+          </tbody>
         </table>
       </div>
     </div>
