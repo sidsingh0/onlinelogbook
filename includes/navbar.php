@@ -17,6 +17,9 @@
                     <a class="nav-link" href="/logbook_online/onlinelogbook/procord/index.php">Add</a>
                   </li>
                   <li class="nav-item mx-1">
+                    <a class="nav-link" href="/logbook_online/onlinelogbook/procord/search.php" aria-current="page">Search</a>
+                  </li>
+                  <li class="nav-item mx-1">
                     <a class="nav-link" href="/logbook_online/onlinelogbook/procord/procord-view.php" aria-current="page">View</a>
                   </li>
                 ';
