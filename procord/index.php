@@ -34,7 +34,7 @@
         $enddate= $_POST['enddate'];
         $logno= $_POST['logno'];
         $year= $_POST['year'];
-        $query= "insert into log_creation (log_no,year,sem,date_from,date_to) values ('$logno','$year','$semester','$startdate','$enddate')";
+        $query= "insert into log_creation (log_no,year,sem,date_from,date_to,dept) values ('$logno','$year','$semester','$startdate','$enddate','$dept')";
         $result_insert= mysqli_query($conn,$query);
     };
 
@@ -106,7 +106,7 @@
       <div class="container">
         <h2 class="my-4">Previously Created Logs: </h2>
           <?php
-            $query= "select * from log_creation where sem='$sem_proco' and year='$year_proco'";
+            $query= "select * from log_creation where (sem='$sem_proco' and year='$year_proco') and dept='$dept'";
             $result_log= mysqli_query($conn,$query);
             while ($res=$result_log->fetch_assoc()){
               echo ('

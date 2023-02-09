@@ -108,12 +108,12 @@
             $date= $_POST['date'];
             $year= $_POST["year"];
             $division= $_POST["div"];
-            $check="select * from log_content where ((log_no=$logno and groupno=$groupno) and (aca_year=$aca_year and division='$division')) and year='$year'";
+            $check="select * from log_content where ((log_no=$logno and groupno=$groupno) and (aca_year=$aca_year and division='$division')) and (year='$year' and dept='$dept')";
             $result_check = mysqli_query($conn, $check);
             if(mysqli_num_rows($result_check) > 0){
                 exit("NO MASTI");
             }else{
-                $query= "insert into log_content (sem,groupno,log_no,progress_planned,progress_achieved,date,year,division) values ('$sem',$groupno,$logno,'$plannedprog','$achievedprog','$date', '$year','$division')";
+                $query= "insert into log_content (sem,groupno,log_no,progress_planned,progress_achieved,date,year,division,dept) values ('$sem',$groupno,$logno,'$plannedprog','$achievedprog','$date', '$year','$division','$dept')";
                 $result= mysqli_query($conn,$query) or die(mysqli_error($conn));
                 if($result){
                     echo " <script>window.location = '/logbook_online/onlinelogbook/student/index.php'</script>";

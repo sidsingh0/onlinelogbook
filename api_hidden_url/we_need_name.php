@@ -10,7 +10,7 @@
             $result=mysqli_query($conn, $sql)->fetch_assoc();
             
             if($result){
-                $data = [ 'msg' => $result["name"]];
+                $data = [ 'msg' => $result["name"], 'dept' => $result['dept']];
             }else{
                 $data = ['msg' => "Invalid Moodle"];
             }

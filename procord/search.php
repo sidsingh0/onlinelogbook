@@ -20,12 +20,6 @@
 <body>
     <?php include('../includes/navbar.php')?>
     <div class="container my-5">
-    <?php
-        $sql="select * from procos where username='$username'";
-        $result=mysqli_query($conn, $sql)->fetch_assoc();
-        $sem_proco = $result["sem"];
-    ?>
-
 
     <h2>Search A Group:</h2>
     <br><hr>
@@ -34,13 +28,27 @@
             <div class="col-xs-12 col-md-6 my-2">
                 <div class="input-group col-md-6 col-xs-12">
                 <span class="input-group-text">Year</span>
-                <input class="form-control" value="SE" name="year" id="yearcheck" readonly>
+                <!-- <input class="form-control" value="SE" name="year" id="yearcheck" readonly> -->
+                <select class="form-select" name="year" required>
+                    <option >SE</option>
+                    <option >TE</option>
+                    <option >BE</option>
+                    <!-- <option >C</option> -->
+                </select>
                 </div>
             </div>
             <div class="col-xs-12 col-md-6 my-2">
                 <div class="input-group col-md-6 col-xs-12">
                     <span class="input-group-text">Semester</span>
-                    <input class="form-control" value="<?php echo $sem_proco; ?>" id="sem" name="sem" readonly>
+                    <!-- <input class="form-control" value="<?php //echo $sem_proco; ?>" id="sem" name="sem" readonly> -->
+                    <select class="form-select" name="sem" id="sem" required>
+                        <option >III</option>
+                        <option >IV</option>
+                        <option >V</option>
+                        <option >VI</option>
+                        <option >VII</option>
+                        <option >VIII</option>
+                    </select>
                 </div>
             </div>
         </div>
@@ -76,26 +84,6 @@
 
     <hr>
     </div>
-    
-    <script>
-        function setYearFromSem(){
-            let a = $("#sem").val();
-            if(a === "III" || a === "IV"){
-                $("#yearcheck").val("SE");
-            }else if(a === "V" || a === "VI"){
-                $("#yearcheck").val("TE");
-            }else{
-                $("#yearcheck").val("BE");
-            }
-            
-        }
-        $(document).ready(() => {
-            setYearFromSem();
-        })
-        
-    </script>
-
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>

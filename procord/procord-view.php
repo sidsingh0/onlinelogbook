@@ -40,22 +40,20 @@ if ($_COOKIE['role'] != 'proco') {
           <thead>
           <?php
           // $query = "SELECT g.groupno, g.title, g.sem, u.name, u.username from groups g JOIN userinfo u ON g.guide_id = u.username WHERE g.sem='$semester' and g.year='$year' group BY g.guide_id, g.groupno;";
-          $query = "select u.name, g.guide_id from groups g JOIN userinfo u ON g.guide_id=u.username where (g.sem='$semester' and g.year='$year') and aca_year=$aca_year group by g.guide_id";
+          $query = "select u.name, g.guide_id from groups g JOIN userinfo u ON g.guide_id=u.username where (g.sem='$semester' and g.year='$year') and (g.aca_year=$aca_year and g.dept='$dept') group by g.guide_id";
           $result = mysqli_query($conn, $query);
+          echo "                <tr>
+          <th>Guide Name</th>
+          <th>Group No.</th>
+          <th>Student Name</th>
+          <th>Project Title</th>
+          <th>Logs Filled</th>
+          <th>View Logs</th>
+        </tr></thead><tbody>";
           while ($data = $result->fetch_assoc()) {
             $guide_id = $data['guide_id'];
-            $guidename = $data["name"];
-            echo "
-                <tr>
-                  <th>Guide Name</th>
-                  <th>Group No.</th>
-                  <th>Student Name</th>
-                  <th>Project Title</th>
-                  <th>Logs Filled</th>
-                  <th>View Logs</th>
-                </tr></thead><tbody>";
-                
-                $sql_guide_get = "select * from groups where (guide_id='$guide_id' and sem='$semester') and aca_year=$aca_year group by groupno , year, division";
+            $guidename = $data["name"];          
+                $sql_guide_get = "select * from groups where (guide_id='$guide_id' and sem='$semester') and (aca_year=$aca_year and dept='$dept') group by groupno , year, division";
                 $res_guide_get = mysqli_query($conn, $sql_guide_get);
                 $count = mysqli_num_rows($res_guide_get);
                 while($r=$res_guide_get->fetch_assoc()){
@@ -64,9 +62,9 @@ if ($_COOKIE['role'] != 'proco') {
                   $division=$r['division'];
                   $year_of = $r['year'];
                   $title = $r['title'];
-                  $sql_log_get = "select count(*) as count from log_content where ((groupno=$group_no and year='$year_of') and (division='$division' and aca_year=$aca_year)) and sem='$semester'";
+                  $sql_log_get = "select count(*) as count from log_content where ((groupno=$group_no and year='$year_of') and (division='$division' and aca_year=$aca_year)) and (sem='$semester' and dept='$dept')";
                   $res_log_get = mysqli_query($conn, $sql_log_get)->fetch_assoc();
-                  $sql_grp_get = "select * from groups where ((groupno=$group_no and year='$year_of') and (division='$division' and aca_year=$aca_year)) and sem='$semester'";
+                  $sql_grp_get = "select * from groups where ((groupno=$group_no and year='$year_of') and (division='$division' and aca_year=$aca_year)) and (sem='$semester' and dept='$dept')";
                   $res_grp_get = mysqli_query($conn, $sql_grp_get);
                   $count = mysqli_num_rows($res_guide_get);
                   $count_inner = mysqli_num_rows($res_grp_get);
@@ -90,6 +88,9 @@ if ($_COOKIE['role'] != 'proco') {
                   };
                 }
                 
+            }
+            if(mysqli_num_rows($result) == 0){
+              echo "<h3 class='text-center'>No guide has added groups for semester $semester yet!</h3>";
             }
           
           ?>
@@ -124,7 +125,7 @@ if ($_COOKIE['role'] != 'proco') {
     }
     // crome,mozilla
     else {
-    var uri = 'data:application/vnd.ms-excel,' + document.getElementById("datatable").innerHTML.replace(/ /g, '%20');
+    var uri = 'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,' + document.getElementById("datatable").innerHTML.replace(/ /g, '%20');
         var link = document.createElement("a");
         link.href = uri;
         link.style = "visibility:hidden";
@@ -136,12 +137,7 @@ if ($_COOKIE['role'] != 'proco') {
 }
     $(document).ready(function() {
       $('#export').on('click', function(e){
-          // $("#table").table2excel({
-          //     exclude: ".no",
-          //     name: "Data",
-          //     filename: "List",
-          // });
-          ExportToExcel("report");
+          ExportToExcel("report-on-" + new Date().toLocaleDateString());
       });
 });
   </script>

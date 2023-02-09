@@ -30,7 +30,7 @@ if ($_COOKIE['role'] != 'student') {
             $year=$res_get["year"];
             $guide_id=$res_get["guide_id"];
             $title=$res_get["title"];
-            $sql="select * from groups where (groupno=$groupno and division='$division') and (aca_year=$aca_year and sem='$semester')";
+            $sql="select * from groups where ((groupno=$groupno and division='$division') and (aca_year=$aca_year and sem='$semester')) and dept='$dept'";
             $result=mysqli_query($conn, $sql);
         }else{
             echo "<center>Please wait for a guide to add you!</center>";
@@ -82,7 +82,7 @@ if ($_COOKIE['role'] != 'student') {
         <h2 class="my-3">Logs Pending:</h2>
         <hr>
         <?php
-        $sql_log = "select * from log_creation where (sem='$semester' and year='$year') and (aca_year=$aca_year)";
+        $sql_log = "select * from log_creation where ((sem='$semester' and year='$year') and (aca_year=$aca_year)) and dept='$dept'";
         $res_log = mysqli_query($conn, $sql_log);
         if(mysqli_num_rows($res_log) < 1){
             echo "No logs pending";
@@ -96,7 +96,7 @@ if ($_COOKIE['role'] != 'student') {
                 $currDate=date('d-m-Y', strtotime($currDate));
                 if (($currDate >= $startdate) && ($currDate <= $enddate)){ 
                     $log_no = $res["log_no"];
-                    $sql_log_content = "select * from log_content where ((log_no=$log_no and groupno=$groupno) and (aca_year=$aca_year and sem='$semester')) and division='$division'";
+                    $sql_log_content = "select * from log_content where ((log_no=$log_no and groupno=$groupno) and (aca_year=$aca_year and sem='$semester')) and (division='$division' and dept='$dept')";
                     $res_log_content = mysqli_query($conn, $sql_log_content) or die(mysqli_error($conn));   
                     if($res_log_content->fetch_assoc()){
 
@@ -133,7 +133,7 @@ if ($_COOKIE['role'] != 'student') {
                             </tr>
                         </thead>
                         <?php
-                        $query = "select * from log_content where (groupno=$groupno and sem='$semester') and (aca_year=$aca_year and division='$division') order by 'log_no'";
+                        $query = "select * from log_content where ((groupno=$groupno and sem='$semester') and (aca_year=$aca_year and division='$division')) and dept='$dept' order by 'log_no'";
                         $result = mysqli_query($conn, $query);
                         while ($data = $result->fetch_assoc()) {
                             $sem = $data['sem'];
