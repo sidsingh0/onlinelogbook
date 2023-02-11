@@ -30,6 +30,17 @@ if ($_COOKIE['role'] != 'proco') {
   $sem_proco = $result["sem"];
   $year_proco = $result["year"];
 
+  $sql = "select * from procos where username='$username'";
+  $result = mysqli_query($conn, $sql)->fetch_assoc();
+  $sem_proco = $result["sem"];
+  $year_proco = $result["year"];
+
+  $sql_new = "select max(log_no) as log_no from log_creation where year='$year_proco'";
+  $result_new = mysqli_query($conn, $sql_new)->fetch_assoc();
+  if ($result_new) {
+    $next_log = $result_new["log_no"] + 1;
+  }
+
     if (isset($_POST['semester'])){
         $semester= $_POST['semester'];
         $startdate= $_POST['startdate'];
@@ -96,7 +107,9 @@ if ($_COOKIE['role'] != 'proco') {
     </div>
 
 
-      <div class="container">
+      
+        
+    <div class="container">
         <h2 class="my-4">Previously Created Logs: </h2>
           <?php
             $query= "select * from log_creation where (sem='$sem_proco' and year='$year_proco') and dept='$dept'";
@@ -104,15 +117,7 @@ if ($_COOKIE['role'] != 'proco') {
             while ($res=$result_log->fetch_assoc()){
               echo ('
 
-    <div class="container">
-      <h2 class="my-4">Previously Created Logs: </h2>
-     
-      $query = "select * from log_creation where sem='.$sem_proco.' and year='.$year_proco.'";
-      $result_log = mysqli_query($conn, $query);
-      while ($res = $result_log->fetch_assoc()) {
-        
-
-              <div class="modal fade" id="exampleModal' . $res["log_no"] . '" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal fade" id="exampleModal'. $res["log_no"]. '" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -120,15 +125,15 @@ if ($_COOKIE['role'] != 'proco') {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
-                    <form method="POST" action="' . $_SERVER["PHP_SELF"] . '">
-                    <input type="hidden" value="' . $res["id"] . '" name="id">
+                    <form method="POST" action="'.$_SERVER["PHP_SELF"].'">
+                    <input type="hidden" value="'. $res["id"] .'" name="id">
                     <div class="col-xs-12">
                         <label for="date_from" class="form-label">Date From</label>
-                        <input type="date" class="form-control" name="date_from" id="date_from" value="' . $res["date_from"] . '">
+                        <input type="date" class="form-control" name="date_from" id="date_from" value="'. $res["date_from"]. '">
                       </div>
                       <div class="col-xs-12">
                         <label for="date_to" class="form-label">Date To</label>
-                        <input type="date" class="form-control" name="date_to" id="date_to" value="' . $res["date_to"] . '">
+                        <input type="date" class="form-control" name="date_to" id="date_to" value="'. $res["date_to"]. '">
                       </div>     
             
                       <div class="row g-3 my-2">
@@ -146,26 +151,26 @@ if ($_COOKIE['role'] != 'proco') {
                 <div class="card my-4 text-center">
                   <div class="card-header">
                     <div class="text-start">
-                      Log Number ' . $res["log_no"] . '
-                      <button type="button" style="float: right!important;" class="text-white btn" data-bs-toggle="modal" data-bs-target="#exampleModal' . $res["log_no"] . '">
+                      Log Number '.$res["log_no"].'
+                      <button type="button" style="float: right!important;" class="text-white btn" data-bs-toggle="modal" data-bs-target="#exampleModal'. $res["log_no"]. '">
                         Update
                       </button>
                     </div>
                   </div>
                   <div class="card-body">
                     <blockquote class="blockquote mb-0">
-                      <p>Year: ' . $res["year"] . '</p>
-                      <p>Sem: ' . $res["sem"] . '</p>
-                      <p>Date: ' . $res["date_from"] . ' To ' . $res["date_to"] . '</p>
+                      <p>Year: '. $res["year"] .'</p>
+                      <p>Sem: '. $res["sem"] .'</p>
+                      <p>Date: '. $res["date_from"] .' To '. $res["date_to"] .'</p>
                     </blockquote>
 
                   </div>
                 </div>
               ');
-      }
-      ?>
+            }
+          ?>
+      </div>
     </div>
-  </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
 
