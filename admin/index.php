@@ -19,7 +19,7 @@
         $sql2="update procos set sem='$f_sem', year='$f_year' where username=$f_username";
         $res2=mysqli_query($conn, $sql2);
       }else{
-        $sql2="insert into procos (username, sem, year) values ('$f_username', '$f_sem', '$f_year')";
+        $sql2="insert into procos (username, sem, year, dept) values ('$f_username', '$f_sem', '$f_year', '$dept')";
         $res2=mysqli_query($conn, $sql2);
       }
     }
@@ -79,6 +79,10 @@
           <div class="col-xs-12 my-3">
             <label for="'. $r["username"]. '" class="form-label">Faculty Username</label>
             <input class="form-control" name="f_username" id="'. $r["username"]. '" value="'. $r["username"]. '" readonly>
+          </div>
+          <div class="col-xs-12 my-3">
+            <label for="'. $r["username"]. '" class="form-label">Faculty Department</label>
+            <input class="form-control" name="dept" id="'. $r["dept"]. '" value="'. $r["dept"]. '" readonly>
           </div>
           <div class="col-xs-12 mb-3">
             <label for="role" class="form-label">Faculty Role</label>

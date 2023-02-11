@@ -1,5 +1,5 @@
 <?php
-
+    $aca_year = date("Y");
     $servername="localhost";
     $username_db="root";
     $password="";

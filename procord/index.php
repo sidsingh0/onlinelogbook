@@ -30,38 +30,25 @@ if ($_COOKIE['role'] != 'proco') {
   $sem_proco = $result["sem"];
   $year_proco = $result["year"];
 
-  $sql_new = "select max(log_no) as log_no from log_creation where year='$year_proco'";
-  $result_new = mysqli_query($conn, $sql_new)->fetch_assoc();
-  if ($result_new) {
-    $next_log = $result_new["log_no"] + 1;
-  }
+    if (isset($_POST['semester'])){
+        $semester= $_POST['semester'];
+        $startdate= $_POST['startdate'];
+        $enddate= $_POST['enddate'];
+        $logno= $_POST['logno'];
+        $year= $_POST['year'];
+        $query= "insert into log_creation (log_no,year,sem,date_from,date_to,dept) values ('$logno','$year','$semester','$startdate','$enddate','$dept')";
+        $result_insert= mysqli_query($conn,$query);
+    };
 
-
-  if (isset($_POST['submit'])) {
-
-
-
-    $semester = $_POST['semester'];
-    $startdate = $_POST['startdate'];
-    $enddate = $_POST['enddate'];
-    $logno = $_POST['logno'];
-    $year = $_POST['year'];
+    if(isset($_POST["submitmodal"])){
+      $startdate= $_POST['date_from'];
+      $enddate= $_POST['date_to'];
+      $id= $_POST["id"];
+      $query_update= "update log_creation set date_from='$startdate' , date_to='$enddate' where id=$id";
+      $result_update= mysqli_query($conn,$query_update);
+    }
     
-    $result_insert = mysqli_query($conn, $query);
-  };
-
-
-
-
-  if (isset($_POST["submitmodal"])) {
-    $startdate = $_POST['date_from'];
-    $enddate = $_POST['date_to'];
-    $id = $_POST["id"];
-    $query_update = "update log_creation set date_from='$startdate' , date_to='$enddate' where id=$id";
-    $result_update = mysqli_query($conn, $query_update);
-  }
-
-  ?>
+    ?>
 
   <?php include('../includes/navbar.php') ?>
 
@@ -109,14 +96,21 @@ if ($_COOKIE['role'] != 'proco') {
     </div>
 
 
+      <div class="container">
+        <h2 class="my-4">Previously Created Logs: </h2>
+          <?php
+            $query= "select * from log_creation where (sem='$sem_proco' and year='$year_proco') and dept='$dept'";
+            $result_log= mysqli_query($conn,$query);
+            while ($res=$result_log->fetch_assoc()){
+              echo ('
 
     <div class="container">
       <h2 class="my-4">Previously Created Logs: </h2>
-      <?php
-      $query = "select * from log_creation where sem='$sem_proco' and year='$year_proco'";
+     
+      $query = "select * from log_creation where sem='.$sem_proco.' and year='.$year_proco.'";
       $result_log = mysqli_query($conn, $query);
       while ($res = $result_log->fetch_assoc()) {
-        echo ('
+        
 
               <div class="modal fade" id="exampleModal' . $res["log_no"] . '" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog">

@@ -112,7 +112,6 @@ body {
      
 
 		  $hash = password_hash($password,PASSWORD_DEFAULT);
-      // echo($hash);
       $sql = "select * from users where username = $username";
       $result = mysqli_query($conn, $sql)->fetch_assoc();
       if($result){

@@ -14,17 +14,26 @@
               if($_COOKIE["role"] == "proco"){
                 echo '
                   <li class="nav-item mx-1">
-                    <a class="nav-link" href="/logbook_online/onlinelogbook/procord/index.php">Add</a>
+                    <a class="nav-link" href="/logbook_online/onlinelogbook/procord/index.php">Add Logs</a>
                   </li>
                   <li class="nav-item mx-1">
-                    <a class="nav-link" href="/logbook_online/onlinelogbook/procord/procord-view.php" aria-current="page">View</a>
+                    <a class="nav-link" href="/logbook_online/onlinelogbook/procord/add-group.php">Add A Group</a>
+                  </li>
+                  <li class="nav-item mx-1">
+                    <a class="nav-link" href="/logbook_online/onlinelogbook/procord/view-groups.php">My Groups</a>
+                  </li>
+                  <li class="nav-item mx-1">
+                    <a class="nav-link" href="/logbook_online/onlinelogbook/procord/search.php" aria-current="page">Search</a>
+                  </li>
+                  <li class="nav-item mx-1">
+                    <a class="nav-link" href="/logbook_online/onlinelogbook/procord/procord-view.php" aria-current="page">View All Groups</a>
                   </li>
                 ';
               }
               if($_COOKIE["role"] == "admin"){
                 echo '
                 <li class="nav-item mx-1">
-                  <a class="nav-link" href="/logbook_online/onlinelogbook/procord/edit-faculties.php" aria-current="page">Edit Faculties</a>
+                  <a class="nav-link" href="/logbook_online/onlinelogbook/admin/index.php" aria-current="page">Edit Faculties</a>
                 </li>
               ';
               }
