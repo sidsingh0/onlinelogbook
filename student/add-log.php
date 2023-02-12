@@ -31,8 +31,6 @@
                 $year_of=$res_get["year"];
                 $div_of=$res_get["division"];
             }
-        }
-        if(isset($_POST["sem"])){
             $startdate = date('Y-m-d',strtotime($_POST["start"]));
             $enddate = date('Y-m-d',strtotime($_POST["end"]));
             $currDate = $_POST["date"];
@@ -51,6 +49,7 @@
                 $achievedprog= $_POST['achievedprog'];
                 $date= $_POST['date'];
                 $year= $_POST["year"];
+                $groupno= $_POST["groupno"];
                 $division= $_POST["div"];
                 $check="select * from log_content where ((log_no=$logno and groupno=$groupno) and (aca_year=$aca_year and division='$division')) and (year='$year' and dept='$dept')";
                 $result_check = mysqli_query($conn, $check);
@@ -63,6 +62,8 @@
                         echo " <script>window.location = '/logbook_online/onlinelogbook/student/index.php'</script>";
                     }
                 }
+            }else{
+                header("Location: /logbook_online/onlinelogbook/student/index.php");
             }
         }
         
@@ -75,6 +76,10 @@
 
         <div class="col-sm-4">
             <input type="hidden" class="form-control" id="semester" value="<?php echo $semester; ?>" name="semester" readonly>
+        </div>
+
+        <div class="col-sm-4">
+            <input type="hidden" class="form-control" id="grpno" value="<?php echo $groupno; ?>" name="groupno" readonly>
         </div>
 
         <div class="col-sm-4">
@@ -119,9 +124,6 @@
         </div>
 
       </form>
-      <?php 
-
-      ?>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>

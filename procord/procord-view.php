@@ -32,12 +32,13 @@ if ($_COOKIE['role'] != 'proco') {
   ?>
   <div class="container">
     <h2 class="text-center my-5">List of all the guides and groups of semester <?php echo $semester; ?></h2>
-    <button id="export" class="btn btn-outline-info mb-3 mt-0" style="float: right!important;">Download List</button>
+    <button id="export" class="btn btn-outline-info mb-3 mt-0" style="float: right!important;">Download List</button><br><br><br>
     <div class="col-lg-12" style="border-radius:6px;overflow:hidden;border:0.2px solid grey">
       <div id="datatable" class="table-responsive">
 
-        <table id="table" class="table table-bordered border-secondary">
+        <table id="table" class="table table-bordered border-secondary mb-0">
           <thead>
+            <th colspan="6"><center><?php echo $year." - Semester ".$semester." AY ". date("Y",strtotime("-1 year")) ." - ".$aca_year; ?></center></th>
           <?php
           // $query = "SELECT g.groupno, g.title, g.sem, u.name, u.username from groups g JOIN userinfo u ON g.guide_id = u.username WHERE g.sem='$semester' and g.year='$year' group BY g.guide_id, g.groupno;";
           $query = "select u.name, g.guide_id from groups g JOIN userinfo u ON g.guide_id=u.username where (g.sem='$semester' and g.year='$year') and (g.aca_year=$aca_year and g.dept='$dept') group by g.guide_id";

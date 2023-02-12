@@ -42,9 +42,6 @@
                   <a class="nav-link" href="/logbook_online/onlinelogbook/admin/admin-view.php" aria-current="page">View all groups</a>
                 </li>
                 <li class="nav-item mx-1">
-                    <a class="nav-link" href="/logbook_online/onlinelogbook/admin/add-group.php">Add A Group</a>
-                </li>
-                <li class="nav-item mx-1">
                     <a class="nav-link" href="/logbook_online/onlinelogbook/admin/search.php" aria-current="page">Search</a>
                 </li>
               ';

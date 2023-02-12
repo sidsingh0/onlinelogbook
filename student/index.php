@@ -94,13 +94,18 @@ if ($_COOKIE['role'] != 'student') {
                 $enddate = date("d-m-Y", strtotime($enddate.' + 5 days'));
                 $currDate = date('d-m-Y');
                 $currDate=date('d-m-Y', strtotime($currDate));
+                $log_no = $res["log_no"];
+                $sql_log_content = "select * from log_content where ((log_no=$log_no and groupno=$groupno) and (aca_year=$aca_year and sem='$semester')) and (division='$division' and dept='$dept')";
+                $res_log_content = mysqli_query($conn, $sql_log_content) or die(mysqli_error($conn));   
+                if($res_log_content->fetch_assoc()){
+                        echo '
+                        <div class="card my-3 bg-success">
+                            <div class="card-body">
+                                <p class="my-0 btn text-white">Log # '. $res["log_no"] .' was uploaded on time!</p>
+                            </div>
+                        </div>';
+                } else{
                 if (($currDate >= $startdate) && ($currDate <= $enddate)){ 
-                    $log_no = $res["log_no"];
-                    $sql_log_content = "select * from log_content where ((log_no=$log_no and groupno=$groupno) and (aca_year=$aca_year and sem='$semester')) and (division='$division' and dept='$dept')";
-                    $res_log_content = mysqli_query($conn, $sql_log_content) or die(mysqli_error($conn));   
-                    if($res_log_content->fetch_assoc()){
-
-                    } else{
                         echo '
                             <form action="add-log.php" method="POST">
                                 <input type="hidden" name="log" value="'.$res["log_no"].'">
@@ -115,6 +120,12 @@ if ($_COOKIE['role'] != 'student') {
                                 </div>
                             </form>
                         ';
+                }else{
+                    echo '<div class="card my-3 bg-danger">
+                    <div class="card-body">
+                        <p class="my-0 btn text-white">Log # '. $res["log_no"] .' was not uploaded on time!</p>
+                    </div>
+                </div>';
                 }
             }
         }
