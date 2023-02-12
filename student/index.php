@@ -102,11 +102,19 @@ if ($_COOKIE['role'] != 'student') {
 
                     } else{
                         echo '
-                        <div class="card my-3">
-                            <a class="text-white" href="add-log.php?log='. $res["log_no"] .'&sem='. $semester .'&date='. $currDate .'&start='.$startdate.'&end='.$enddate.'" ><div class="card-body">
-                                Log # '. $res["log_no"] .' shall be uploaded by '. $enddate .' 
-                            </div></a>
-                        </div>';
+                            <form action="add-log.php" method="POST">
+                                <input type="hidden" name="log" value="'.$res["log_no"].'">
+                                <input type="hidden" name="sem" value="'.$semester.'">
+                                <input type="hidden" name="date" value="'.$currDate.'">
+                                <input type="hidden" name="start" value="'.$startdate.'">
+                                <input type="hidden" name="end" value="'.$enddate.'">
+                                <div class="card my-3">
+                                <div class="card-body">
+                                    <button type="submit" class="btn text-white"><u>Log # '. $res["log_no"] .' shall be uploaded by '. $enddate .'</u></button>
+                                </div>
+                                </div>
+                            </form>
+                        ';
                 }
             }
         }

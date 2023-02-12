@@ -28,7 +28,7 @@
     header("Location: /logbook_online/onlinelogbook/procord/procord-view.php");
     exit;
   }
-  if($_COOKIE["role"] == "proco"){
+  if($_COOKIE["role"] == "admin"){
     $role = $_COOKIE["role"];
   }else{
     header("Location: /logbook_online/onlinelogbook/logout.php?logout=true");

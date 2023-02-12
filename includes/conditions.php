@@ -10,6 +10,13 @@ function get_token($username){
     return $token;
 }
 
+function errordisp($title,$description){
+    echo '<div class="alert alert-primary alert-dismissible fade show mx-1 my-3" role="alert">
+    <strong>'.$title.'</strong>'. $description.'
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>';
+}
+
 if(isset($_COOKIE["username"])){
     $username = $_COOKIE["username"];
     $token=get_token($username);
@@ -28,7 +35,4 @@ if(isset($_COOKIE["username"])){
 }else{
     header("Location: /logbook_online/onlinelogbook/index.php");
 }
-
-
-
 ?>
