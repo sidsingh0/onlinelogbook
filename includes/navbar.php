@@ -36,6 +36,9 @@
                   <a class="nav-link" href="/logbook_online/onlinelogbook/admin/index.php" aria-current="page">Edit Faculties</a>
                 </li>
                 <li class="nav-item mx-1">
+                    <a class="nav-link" href="/logbook_online/onlinelogbook/admin/add-logs.php">Add Logs</a>
+                  </li>
+                <li class="nav-item mx-1">
                   <a class="nav-link" href="/logbook_online/onlinelogbook/admin/admin-view.php" aria-current="page">View all groups</a>
                 </li>
                 <li class="nav-item mx-1">
