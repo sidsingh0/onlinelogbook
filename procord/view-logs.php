@@ -10,7 +10,9 @@
     header("Location: /logbook_online/onlinelogbook/procord/procord-view.php");
     exit;
   }
-  if ($_COOKIE['role']!='proco'){
+  if($_COOKIE["role"] == "proco" || $_COOKIE["role"] == "admin"){
+    $role = $_COOKIE["role"];
+  }else{
     header("Location: /logbook_online/onlinelogbook/logout.php?logout=true");
   }
   if(isset($_POST["log_id"])){
@@ -64,11 +66,10 @@
     ?>
 
     <div class="container my-5">
-    <h2 class="my-4">Project Title - <?php echo $title; ?></h2>
+    <h1 class="my-4">Project Title - <?php echo $title; ?></h1>
+    <h5>Guide Name - <?php echo $guide_name; ?></h5>
     <hr>
-    <h2 class="my-4">Guide Name - <?php echo $guide_name; ?></h2>
-    <hr>
-    <h4>Group Details:</h4>
+    <h3 class="my-3">Group Details:</h3>
         <table class="table table-bordered border-secondary">
             <tr>
                 <th>Student Id</th>
@@ -124,8 +125,9 @@
     </div>
 
     <div class="container my-5">
-        <h2 class="my-3">Logs Uploaded:</h2>
-    <hr>
+      <hr>
+        <h3 class="my-3">Logs Uploaded:</h3>
+    
             <?php 
             $sql_log = "select * from log_content where ((groupno=$group_no and year='$year_of') and (division='$div_of' and aca_year=$aca_year)) and (sem='$sem' and dept='$dept')";
             $res_log = mysqli_query($conn, $sql_log);
@@ -147,11 +149,10 @@
 
 
 <div class="container">
-          
-    <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+    <hr>
     <button class="w-100 btn btn-info" onclick="window.open('/logbook_online/onlinelogbook/logbook-pdf.php?groupno=<?php echo $group_no; ?>', 'newwindow','width=1000,height=1000'); return false;">Get Log Book</button>
-      
-          <h2 class="my-5">Log Details:</h2>                      
+    <hr>
+          <h3 class="my-3">Log Details:</h3>                      
     <div>
         <table class="table table-bordered border-secondary">
           <thead class = "thead-dark">
@@ -224,9 +225,6 @@
             ?>
         </table>
     </div>
-
-
-    <hr style="height:2px;border-width:0;color:gray;background-color:gray">
     </div>
 
 

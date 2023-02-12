@@ -35,6 +35,15 @@
                 <li class="nav-item mx-1">
                   <a class="nav-link" href="/logbook_online/onlinelogbook/admin/index.php" aria-current="page">Edit Faculties</a>
                 </li>
+                <li class="nav-item mx-1">
+                  <a class="nav-link" href="/logbook_online/onlinelogbook/admin/admin-view.php" aria-current="page">View all groups</a>
+                </li>
+                <li class="nav-item mx-1">
+                    <a class="nav-link" href="/logbook_online/onlinelogbook/procord/add-group.php">Add A Group</a>
+                </li>
+                <li class="nav-item mx-1">
+                    <a class="nav-link" href="/logbook_online/onlinelogbook/procord/search.php" aria-current="page">Search</a>
+                </li>
               ';
               }
               if($_COOKIE["role"] == "student"){

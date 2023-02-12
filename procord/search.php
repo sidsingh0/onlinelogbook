@@ -1,7 +1,7 @@
 <?php
   include("../includes/connect.php");
   include("../includes/conditions.php");
-  if($_COOKIE["role"] == "proco"){
+  if($_COOKIE["role"] == "proco" || $_COOKIE["role"] == "admin"){
     $role = $_COOKIE["role"];
   }else{
     header("Location: /logbook_online/onlinelogbook/logout.php?logout=true");
@@ -21,8 +21,8 @@
     <?php include('../includes/navbar.php')?>
     <div class="container my-5">
 
-    <h2>Search A Group:</h2>
-    <br><hr>
+    <h1>Search A Group:</h1>
+    <hr>
     <form class="row" action="view-logs.php" method="GET">
         <div class="form-group row mb-2">
             <div class="col-xs-12 col-md-6 my-2">

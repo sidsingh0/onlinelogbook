@@ -1,7 +1,7 @@
 <?php
   include("../includes/connect.php");
   include("../includes/conditions.php");
-  if($_COOKIE["role"] == "proco"){
+  if($_COOKIE["role"] == "proco" || $_COOKIE["role"] == "admin"){
     $role = $_COOKIE["role"];
   }else{
     header("Location: /logbook_online/onlinelogbook/logout.php?logout=true");
@@ -72,8 +72,8 @@
     ?>
 
 
-    <h2>Add A Group:</h2>
-    <br><hr>
+    <h1 class="my-3">Add A Group:</h1>
+    <hr>
     <form class="row" action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST">
         <div class="form-group row mb-2">
             <div class="col-xs-12">
@@ -119,7 +119,7 @@
                 <span class="input-group-text">Project Title</span>
                 <input type="text" name="title" class="form-control" required>
             </div>
-
+        
         </div>
         <div class="mb-3 row mt-5">
             <label for="inputPassword" class="col-sm-2 col-form-label">Team Member 1 (Leader):</label>
