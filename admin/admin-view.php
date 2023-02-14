@@ -1,7 +1,7 @@
 <?php
 include("../includes/connect.php");
 include("../includes/conditions.php");
-if ($_COOKIE['role'] != 'proco') {
+if ($_COOKIE['role'] != 'admin') {
   header("Location: /logbook_online/onlinelogbook/logout.php?logout=true");
 }
 
@@ -19,26 +19,77 @@ if ($_COOKIE['role'] != 'proco') {
 </head>
 
 <body>
+  <script>
+    function setYearFromSem(sem){
+                  let a = sem.target.value;
+                  if(a === "III" || a === "IV"){
+                      $("#yearcheck").val("SE");
+                  }else if(a === "V" || a === "VI"){
+                      $("#yearcheck").val("TE");
+                  }else{
+                      $("#yearcheck").val("BE");
+                  }
+                  
+              }
+  </script>
   <?php include('../includes/navbar.php') ?>
+  <div class="container my-4">
+  <form class="row" action="admin-view.php" method="POST">
+        <div class="form-group row mb-2">
+            <div class="col-xs-12 col-md-6 my-2">
+                <div class="input-group col-md-6 col-xs-12">
+                <span class="input-group-text">Year</span>
+                <!-- <input class="form-control" value="SE" name="year" id="yearcheck" readonly> -->
+                <input class="form-control" name="year" id="yearcheck" value="SE" readonly>
+            </div>
+            </div>
+            <div class="col-xs-12 col-md-6 my-2">
+                <div class="input-group col-md-6 col-xs-12">
+                    <span class="input-group-text">Semester</span>
+                    <!-- <input class="form-control" value="<?php //echo $sem_proco; ?>" id="sem" name="sem" readonly> -->
+                    <select class="form-select" name="sem" id="sem" onchange="setYearFromSem(event)" required>
+                        <option >III</option>
+                        <option >IV</option>
+                        <option >V</option>
+                        <option >VI</option>
+                        <option >VII</option>
+                        <option >VIII</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row mt-3">
+        </div>
+        <div class="form-group row mb-2">
+            <div class="col-xs-12 col-md-12">
+                <button type="submit" name="searchsubmit" class="w-100 btn btn-outline-info">Submit</button>
+            </div>
+        </div>
+    </form>
+  </div>
   <?php
-  $sql_get = "select * from procos where username=$username";
-  $res_get = mysqli_query($conn, $sql_get)->fetch_assoc();
-  if ($res_get) {
-    $semester = $res_get["sem"];
-    $year = $res_get["year"];
-  } else {
+  // $sql_get = "select * from procos where username=$username";
+  // $res_get = mysqli_query($conn, $sql_get)->fetch_assoc();
+  if (isset($_POST['sem'])) {
+    $semester = $_POST["sem"];
+    $year = $_POST["year"];
+  }
+  else{
     exit;
   }
   ?>
   <div class="container">
     <h2 class="text-center my-5">List of all the guides and groups of semester <?php echo $semester; ?></h2>
-    <button id="export" class="btn btn-outline-info mb-3 mt-0" style="float: right!important;">Download List</button><br><br><br>
+    <button id="export" class="btn btn-outline-info mb-3 mt-0" style="float: right!important;">Download List</button>
+    <br><br><br>
     <div class="col-lg-12" style="border-radius:6px;overflow:hidden;border:0.2px solid grey">
       <div id="datatable" class="table-responsive">
 
         <table id="table" class="table table-bordered border-secondary mb-0">
           <thead>
-            <th colspan="6"><center><?php echo $year." - Semester ".$semester." AY ". date("Y",strtotime("-1 year")) ." - ".$aca_year; ?></center></th>
+          <th colspan="6"><center><?php echo $year." - Semester ".$semester." AY ". date("Y",strtotime("-1 year")) ." - ".$aca_year; ?></center></th>
+          
           <?php
           // $query = "SELECT g.groupno, g.title, g.sem, u.name, u.username from groups g JOIN userinfo u ON g.guide_id = u.username WHERE g.sem='$semester' and g.year='$year' group BY g.guide_id, g.groupno;";
           $query = "select u.name, g.guide_id from groups g JOIN userinfo u ON g.guide_id=u.username where (g.sem='$semester' and g.year='$year') and (g.aca_year=$aca_year and g.dept='$dept') group by g.guide_id";
@@ -141,6 +192,9 @@ if ($_COOKIE['role'] != 'proco') {
           ExportToExcel("report-on-" + new Date().toLocaleDateString());
       });
 });
+      
+      
+        
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>

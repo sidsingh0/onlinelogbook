@@ -1,7 +1,7 @@
 <?php
   include("../includes/connect.php");
   include("../includes/conditions.php");
-  if ($_COOKIE['role']!='proco'){
+  if ($_COOKIE['role']!='admin'){
     header("Location: /logbook_online/onlinelogbook/logout.php?logout=true");
   }
 ?>
@@ -12,7 +12,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Co-ordinator - Home</title>
+    <title>Add logs</title>
     <style>
       ::-webkit-calendar-picker-indicator {
       filter: invert(1);
@@ -23,10 +23,10 @@
 </head>
 <body>
     <?php
-    $sql="select * from procos where username='$username'";
-    $result=mysqli_query($conn, $sql)->fetch_assoc();
-    $sem_proco = $result["sem"];
-    $year_proco = $result["year"];
+    // $sql="select * from procos where username='$username'";
+    // $result=mysqli_query($conn, $sql)->fetch_assoc();
+    // $sem_proco = $result["sem"];
+    // $year_proco = $result["year"];
 
     if (isset($_POST['semester'])){
         $semester= $_POST['semester'];
@@ -49,7 +49,19 @@
     ?>
 
     <?php include('../includes/navbar.php')?>
-    
+      <script>
+        function semChange(e) {
+            if(e.target.value=='III' || e.target.value=='IV'){
+                document.getElementById("year").value = 'SE';
+            }
+            if(e.target.value=='V' || e.target.value=='VI'){
+                document.getElementById("year").value = 'TE';
+            }
+            if(e.target.value=='VII' || e.target.value=='VIII'){
+                document.getElementById("year").value = 'BE';
+            }
+        }
+      </script>
       <div class="container my-5">
         
       <div class="container my-4">
@@ -72,11 +84,19 @@
 
             <div class="col-sm-4 col-xs-4">
               <label for="semester" class="form-label">Semester</label>
-              <input class="form-control" value="<?php echo $result["sem"] ?>" id="semester" name="semester" readonly>
+              <select class="form-select" id="semester" name="semester" onChange="semChange(event)" required>
+                <option>III</option>
+                <option>IV</option>
+                <option>V</option>
+                <option>VI</option>
+                <option>VII</option>
+                <option>VIII</option>
+              </select>
             </div>
-            <div class="col-sm-4 col-xs-4">
-              <label for="semester" class="form-label">Year</label>
-              <input class="form-control" name="year" id="year" type="text" value="<?php echo $result["year"] ?>" readonly>
+            <div class="col-xs-12 col-md-4">
+                <label for="year" class="form-label">Year</label>
+                <!-- <input class="form-control" value="SE" name="year" id="yearcheck" readonly> -->
+                <input class="form-control" type="text" name="year" id="year" value="SE" readonly>
             </div>
 
           <div class="row g-3 my-1">
@@ -106,7 +126,7 @@
       <div class="container">
         <h2 class="my-4">Previously Created Logs: </h2>
           <?php
-            $query= "select * from log_creation where (sem='$sem_proco' and year='$year_proco') and dept='$dept'";
+            $query= "select * from log_creation ORDER BY year";
             $result_log= mysqli_query($conn,$query);
             while ($res=$result_log->fetch_assoc()){
               echo ('

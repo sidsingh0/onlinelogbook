@@ -2,10 +2,8 @@
   include("../includes/connect.php");
   include("../includes/conditions.php");
 
-  if(isset($_COOKIE["role"])){
-    if($_COOKIE["role"] != "admin"){
-        header("Location: ". $_SERVER["HTTP_REFERER"]);
-      }
+  if ($_COOKIE['role']!='admin'){
+    header("Location: /logbook_online/onlinelogbook/logout.php?logout=true");
   }
 
 
@@ -21,7 +19,7 @@
         $sql2="update procos set sem='$f_sem', year='$f_year' where username=$f_username";
         $res2=mysqli_query($conn, $sql2);
       }else{
-        $sql2="insert into procos (username, sem, year) values ('$f_username', '$f_sem', '$f_year')";
+        $sql2="insert into procos (username, sem, year, dept) values ('$f_username', '$f_sem', '$f_year', '$dept')";
         $res2=mysqli_query($conn, $sql2);
       }
     }
@@ -43,16 +41,16 @@
 <body>
     <?php include('../includes/navbar.php')?>
     <div class="container">
-        <h3 class="my-5">Below listed are all the faculties:</h3>
+        <h3 class="my-4">Below listed are all the faculties:</h3>
         <hr>
     <?php 
     $sql = "select * from users NATURAL JOIN userinfo where role='proco' OR role='guide'";
     $res=mysqli_query($conn, $sql) or die(mysqli_error($conn));
 
     echo '
-    <div class="col-lg-12">
+    <div class="col-lg-12" style="border-radius:6px;overflow:hidden;border:0.2px solid grey">
     <div class="table-responsive"> 
-    <table class="table">
+    <table class="table table-bordered border-secondary rounded-2 my-0">
         <thead>
             <tr>
                 <th scope="col">Username</th>
@@ -78,19 +76,23 @@
       </div>
       <div class="modal-body">
         <form method="POST" action="'.$_SERVER["PHP_SELF"].'">
-          <div class="col-xs-12">
+          <div class="col-xs-12 my-3">
             <label for="'. $r["username"]. '" class="form-label">Faculty Username</label>
             <input class="form-control" name="f_username" id="'. $r["username"]. '" value="'. $r["username"]. '" readonly>
           </div>
+          <div class="col-xs-12 my-3">
+            <label for="'. $r["username"]. '" class="form-label">Faculty Department</label>
+            <input class="form-control" name="dept" id="'. $r["dept"]. '" value="'. $r["dept"]. '" readonly>
+          </div>
           <div class="col-xs-12 mb-3">
-            <label for="role" class="form-label">Faculty Username</label>
+            <label for="role" class="form-label">Faculty Role</label>
             <select class="form-select" name="f_role" id="role">
                 <option value="guide" >Guide</option>
                 <option value="proco" >Project Co-ordinator</option>
             </select>
           </div>
 
-          <div class="col-xs-12 mb-3">
+          <div class="col-xs-12 mb-3 my-3">
             <label for="role" class="form-label">Semester</label>
             <select class="form-select" name="f_sem" id="role">
                 <option >I</option>

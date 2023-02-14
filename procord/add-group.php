@@ -1,7 +1,7 @@
 <?php
   include("../includes/connect.php");
   include("../includes/conditions.php");
-  if($_COOKIE["role"] == "guide"){
+  if($_COOKIE["role"] == "proco" || $_COOKIE["role"] == "admin"){
     $role = $_COOKIE["role"];
   }else{
     header("Location: /logbook_online/onlinelogbook/logout.php?logout=true");
@@ -13,7 +13,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guide - View Logs</title>
+    <title>Project Coordinator - Add Group</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 </head>
@@ -27,11 +27,11 @@
         $division=$_POST["division"];
         $year = $_POST["year"];
         $sem = $_POST["sem"];
-        $group_no = 0;
         $guide_id = $username; 
         $title = $_POST['title'];
         $moodle_array = $_POST['moodleid'];
         $can_add = true;
+
         foreach ($moodle_array as $moodleid) {
             $check_grp_exist = "select * from groups where student_id=$moodleid and sem='$sem'";
             $res_grp_exist = mysqli_query($conn, $check_grp_exist);
@@ -51,6 +51,7 @@
             }
         }
         if($can_add){
+            $group_no = 0;
             $sql_select = "select max(groupno) as group_no from groups where ((division='$division' and year='$year') and (aca_year=$aca_year and sem='$sem')) and dept='$dept'";
             $result = mysqli_query($conn, $sql_select);
             if($result){
@@ -71,8 +72,8 @@
     ?>
 
 
-    <h2>Add A Group:</h2>
-    <br><hr>
+    <h1 class="my-3">Add A Group:</h1>
+    <hr>
     <form class="row" action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST">
         <div class="form-group row mb-2">
             <div class="col-xs-12">
@@ -118,7 +119,7 @@
                 <span class="input-group-text">Project Title</span>
                 <input type="text" name="title" class="form-control" required>
             </div>
-
+        
         </div>
         <div class="mb-3 row mt-5">
             <label for="inputPassword" class="col-sm-2 col-form-label">Team Member 1 (Leader):</label>

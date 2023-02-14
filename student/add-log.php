@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <?php 
+
     include("../includes/conditions.php");
+    if ($_COOKIE['role']!='student'){
+        header("Location: /logbook_online/onlinelogbook/logout.php?logout=true");
+    }
 ?>
 <html lang="en" data-bs-theme="dark">
 <head>
@@ -16,32 +20,74 @@
     <?php include('../includes/connect.php')?>
 
     <?php
-        $sql_get = "select * from groups where student_id='$username'";
-        $res_get = mysqli_query($conn, $sql_get)->fetch_assoc();
-        if(!$res_get){
-            echo "PLEASE WAIT FOR A GUIDE TO ADD U";
-            exit;
-        }else{
-            $groupno = $res_get["groupno"];
-        }
-
-        if(isset($_GET["sem"])){
-            $semester = $_GET["sem"];
-            $currDate = $_GET["date"];
+        if(isset($_POST["sem"])){
+            $sql_get = "select * from groups where student_id='$username' order by sem desc";
+            $res_get = mysqli_query($conn, $sql_get)->fetch_assoc();
+            if(!$res_get){
+                echo "PLEASE WAIT FOR A GUIDE TO ADD U";
+                exit;
+            }else{
+                $groupno = $res_get["groupno"];
+                $year_of=$res_get["year"];
+                $div_of=$res_get["division"];
+            }
+            $startdate = date('Y-m-d',strtotime($_POST["start"]));
+            $enddate = date('Y-m-d',strtotime($_POST["end"]));
+            $currDate = $_POST["date"];
             $currDate=date('Y-m-d', strtotime($currDate));
-            $logno = $_GET["log"];
+            if(($currDate >= $startdate) && ($currDate <= $enddate)){ 
+                $semester = $_POST["sem"];
+                $logno = $_POST["log"];
+            }else{
+                header("Location: /logbook_online/onlinelogbook/student/index.php");
+            }
         }else{
-            header("Location: /logbook_online/onlinelogbook/student/index.php");
+            if (isset($_POST['button_submit'])){
+                $sem = $_POST['semester'];
+                $logno= $_POST['logno'];
+                $plannedprog= $_POST['plannedprog'];
+                $achievedprog= $_POST['achievedprog'];
+                $date= $_POST['date'];
+                $year= $_POST["year"];
+                $groupno= $_POST["groupno"];
+                $division= $_POST["div"];
+                $check="select * from log_content where ((log_no=$logno and groupno=$groupno) and (aca_year=$aca_year and division='$division')) and (year='$year' and dept='$dept')";
+                $result_check = mysqli_query($conn, $check);
+                if(mysqli_num_rows($result_check) > 0){
+                    exit("NO MASTI");
+                }else{
+                    $query= "insert into log_content (sem,groupno,log_no,progress_planned,progress_achieved,date,year,division,dept) values ('$sem',$groupno,$logno,'$plannedprog','$achievedprog','$date', '$year','$division','$dept')";
+                    $result= mysqli_query($conn,$query) or die(mysqli_error($conn));
+                    if($result){
+                        echo " <script>window.location = '/logbook_online/onlinelogbook/student/index.php'</script>";
+                    }
+                }
+            }else{
+                header("Location: /logbook_online/onlinelogbook/student/index.php");
+            }
         }
+        
     ?>
 
     <div class="container">
     <div class="container my-4">
-      <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="POST">
+      <form action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']);?>" method="POST">
         <div class="row g-3">
 
         <div class="col-sm-4">
             <input type="hidden" class="form-control" id="semester" value="<?php echo $semester; ?>" name="semester" readonly>
+        </div>
+
+        <div class="col-sm-4">
+            <input type="hidden" class="form-control" id="grpno" value="<?php echo $groupno; ?>" name="groupno" readonly>
+        </div>
+
+        <div class="col-sm-4">
+            <input type="hidden" class="form-control" id="year" value="<?php echo $year_of; ?>" name="year" readonly>
+        </div>
+
+        <div class="col-sm-4">
+            <input type="hidden" class="form-control" id="div" value="<?php echo $div_of; ?>" name="div" readonly>
         </div>
 
         <div class="col-sm-4">
@@ -76,19 +122,6 @@
           </div>
           </center>
         </div>
-
-        <?php
-          if (isset($_POST['button_submit'])){
-              $sem = $_POST['semester'];
-              $logno= $_POST['logno'];
-              $plannedprog= $_POST['plannedprog'];
-              $achievedprog= $_POST['achievedprog'];
-              $date= $_POST['date'];
-              $query= "insert into log_content (sem,groupno,log_no,progress_planned,progress_achieved,date) values ('$sem',$groupno,$logno,'$plannedprog','$achievedprog','$date')";
-              $result= mysqli_query($conn,$query) or die(mysqli_error($conn));
-          };
-    
-    ?>
 
       </form>
     </div>
