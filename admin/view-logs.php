@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guide - View Logs</title>
+    <title>Admin - View Logs</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <style>
@@ -55,6 +55,12 @@
             errordisp('','Please enter correct moodle id');
         }
   }
+
+  if (isset($_POST["update_title_btn"])){
+    $title_update=$_POST['update_title'];
+    $query="update groups set title='$title_update' where (division='$div_of' and groupno=$group_no) and ((aca_year=$aca_year and sem='$sem') and (dept='$dept' and year='$year_of'))";
+    $updateresult=mysqli_query($conn,$query);
+  }
 ?>
     <?php
     $sql="select * from groups where ((groupno=$group_no and year='$year_of') and (division='$div_of' and aca_year=$aca_year)) and (sem='$sem' and dept='$dept')";
@@ -62,6 +68,7 @@
     if($result){
         $title = $result["title"];
         $guide_id = $result["guide_id"];
+        $groupid=$result["id"];
         $guide_name_query="select name from userinfo where username=".$guide_id;
         $res_guide_name = mysqli_query($conn, $guide_name_query)->fetch_assoc();
         $guide_name = $res_guide_name["name"];
@@ -77,6 +84,23 @@
     <h3 class="my-3">Group Details:</h3>
         <table class="table table-bordered border-secondary">
             <tr>
+              <th colspan=3>
+              <div class="col-xs-12 col-md-12 my-2">
+                <form action="<?php echo $_SERVER['REQUEST_URI']?>" method="POST">
+                <div class="input-group col-md-6 col-xs-12">
+                    <span class="input-group-text">Project Title</span>
+                    <input type="hidden" class>
+                    <input type="text" class="form-control" name="update_title" value="<?php echo $title?>" required>
+                    <button type="submit" name="update_title_btn" class="btn btn-outline-info">Update</button>
+                </div>
+                </form>
+              </div>
+              </th>
+            </tr>
+        
+        
+        
+        <tr>
                 <th>Student Id</th>
                 <th>Student Name</th>
                 <th>Edit</th>
@@ -155,7 +179,7 @@
 
 <div class="container">
     <hr>
-    <button class="w-100 btn btn-info" onclick="window.open('/logbook_online/onlinelogbook/logbook-pdf.php?groupno=<?php echo $group_no; ?>', 'newwindow','width=1000,height=1000'); return false;">Get Log Book</button>
+    <button class="w-100 btn btn-info" onclick="window.open('/logbook_online/onlinelogbook/logbook-pdf.php?groupno=<?php echo $group_no; ?>&year=<?php echo $year_of; ?>&div=<?php echo $div_of; ?>&sem=<?php echo $sem; ?>&acayear=<?php echo $aca_year; ?>&dept=<?php echo $dept; ?>', 'newwindow','width=1000,height=1000'); return false;">Get Log Book</button>
     <hr>
           <h3 class="my-3">Log Details:</h3>                      
     <div>
