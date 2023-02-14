@@ -55,6 +55,12 @@
             errordisp('','Please enter correct moodle id');
         }
   }
+
+  if (isset($_POST["update_title_btn"])){
+    $title_update=$_POST['update_title'];
+    $query="update groups set title='$title_update' where (division='$div_of' and groupno=$group_no) and ((aca_year=$aca_year and sem='$sem') and (dept='$dept' and year='$year_of'))";
+    $updateresult=mysqli_query($conn,$query);
+  }
 ?>
     <?php
     $sql="select * from groups where ((groupno=$group_no and year='$year_of') and (division='$div_of' and aca_year=$aca_year)) and (sem='$sem' and dept='$dept')";
@@ -62,6 +68,7 @@
     if($result){
         $title = $result["title"];
         $guide_id = $result["guide_id"];
+        $groupid=$result["id"];
         $guide_name_query="select name from userinfo where username=".$guide_id;
         $res_guide_name = mysqli_query($conn, $guide_name_query)->fetch_assoc();
         $guide_name = $res_guide_name["name"];
@@ -77,6 +84,23 @@
     <h3 class="my-3">Group Details:</h3>
         <table class="table table-bordered border-secondary">
             <tr>
+              <th colspan=3>
+              <div class="col-xs-12 col-md-12 my-2">
+                <form action="<?php echo $_SERVER['REQUEST_URI']?>" method="POST">
+                <div class="input-group col-md-6 col-xs-12">
+                    <span class="input-group-text">Project Title</span>
+                    <input type="hidden" class>
+                    <input type="text" class="form-control" name="update_title" value="<?php echo $title?>">
+                    <button type="submit" name="update_title_btn" class="btn btn-outline-info">Update</button>
+                </div>
+                </form>
+              </div>
+              </th>
+            </tr>
+        
+        
+        
+        <tr>
                 <th>Student Id</th>
                 <th>Student Name</th>
                 <th>Edit</th>
