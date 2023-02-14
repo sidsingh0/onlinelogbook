@@ -3,24 +3,34 @@
     include("./includes/conditions.php");
     if(isset($_GET["groupno"])){
         $group_no=$_GET["groupno"];
+        $year_of=$_GET["year"];
+        $div_of=$_GET["div"];
+        $sem=$_GET["sem"];
+        $aca_year=$_GET["acayear"];
+        $dept=$_GET["dept"];
     }
-    // else{
-    //     header("Location: /logbook_online/onlinelogbook/procord/procord-view.php");
-    //     exit;
-    // }
+    else{
+        header("Location: /logbook_online/onlinelogbook/procord/view-logs.php");
+        exit;
+    }
     require('fpdf.php');
 
-    $year_now = date("y");
+    // $year_now = date("y");
 
-    $sql="select * from groups where groupno=$group_no";
+    $sql="select * from groups where ((groupno=$group_no and sem='$sem') and (division='$div_of' and year='$year_of')) and (aca_year='$aca_year' and dept='$dept')";
+    // $sql="select * from groups where groupno=$group_no";
     $res= mysqli_query($conn, $sql)->fetch_assoc();
-    $semester = $res["sem"];
-    $year = $res["year"];
+    // $semester = $res["sem"];
+    // $year = $res["year"];
     $title= $res["title"];
     $guide_id = $res["guide_id"];
     $sql_i = "select * from userinfo where username = '$guide_id'";
     $res_i = mysqli_query($conn, $sql_i)->fetch_assoc();
     $guide_name = $res_i["name"];
+
+    $sql_proconame="select u.name from userinfo as u JOIN procos as p ON u.username = p.username WHERE (sem='$sem' AND year='$year_of') AND p.dept='$dept'";
+    $res_proconame=mysqli_query($conn, $sql_proconame)->fetch_assoc();
+    $proco_name = $res_proconame["name"];
 
     class PDF extends FPDF
     {
@@ -58,7 +68,7 @@
             $x = $this->GetX();
             $y = $this->GetY();
             // Draw the border
-            $this->Rect($x,$y,$w,$h);
+            $this->Rect($x,$y,95,92);
             // Print the text
             $this->MultiCell($w,5,$data[$i],0,$a);
             // Put the position to the right of the cell
@@ -131,7 +141,8 @@
     // Page header
         function Header()
         {
-            global $year_now, $year, $semester;
+            global $year_of, $sem, $aca_year, $div_of, $dept;
+            $aca_year_prev = $aca_year - 1;
             // Arial bold 15
             $this->SetFont('Times','B',20);
             //$this->Line(10, 5, 210-10, 5);
@@ -143,18 +154,22 @@
             // Line break
             $this->Line(10, 25, 210-10, 25);
             $this->SetFont('Arial','',15);
-            $this->Cell(0,45,'Academic Year 20'.date("y",strtotime("-1 year")) . " - 20" . $year_now,0,0,'C');
+            $this->Cell(0,45,'Academic Year '.$aca_year_prev.' - '.$aca_year,0,0,'C');
             $this->SetX($this->lMargin);
-            $this->Cell(100,60,'Year : '.$year,0,0,'C');
-            // $this->SetX($this->lMargin);
-            $this->Cell(80,60,'Sem : '.$semester,0,0,'C');
+            $this->Cell(100,60,'Dept : '.$dept,0,0,'L');
+            $this->SetX($this->lMargin);
+            $this->Cell(140,60,'Year : '.$year_of,0,0,'C');
+            $this->SetX($this->lMargin);
+            $this->Cell(250,60,'Sem : '.$sem,0,0,'C');
+            $this->SetX($this->lMargin);
+            $this->Cell(190,60,'Div : '.$div_of,0,0,'R');
             $this->Ln(20);
         }
 
         // Page footer
         function Footer()
         {
-            global $guide_name;
+            global $guide_name, $proco_name;
             $this->SetY(-27);
             $this->SetFont('Times','B',12);
             $this->Cell(0,10,'Project Guide',0,0,'L');
@@ -163,13 +178,15 @@
             $this->SetX($this->lMargin);
             $this->Cell( 0, 10, 'Head of Department', 0, 0,'R');
             $this->SetY(-20);
-            $this->Cell( 0, 10, 'Guide Name: ' . $guide_name, 0, 0,'L');
+            $this->Cell( 0, 10, $guide_name, 0, 0,'L');
+            $this->SetX($this->lMargin);
+            $this->Cell( 0, 10, $proco_name, 0, 0,'C');
             // Position at 1 cm from bottom
             $this->SetY(-15);
             // Arial italic 8
             $this->SetFont('Arial','I',8);
             // Page number
-            $this->Cell(0,10,'Page '.$this->PageNo().'/{nb}',0,0,'C');
+            $this->Cell(0,13,'Page '.$this->PageNo().'/{nb}',0,0,'C');
         }
 
         function WordWrap(&$text, $maxwidth)
@@ -231,13 +248,15 @@
         
     }
     
+    // First Page (Team Members)
     $pdf = new PDF();
     $pdf->AliasNbPages();
     $pdf->AddPage();
     $pdf->SetFont('Arial','B',15);
     $pdf->Cell(0,40,'Project Title : ' . $title, 0, 1, 'C');
     $pdf->Line(10, 55, 210-10, 55);
-    $sql="select * from groups where groupno=$group_no";
+    $sql="select * from groups where ((groupno=$group_no and sem='$sem') and (division='$div_of' and year='$year_of')) and (aca_year='$aca_year' and dept='$dept')";
+    // $sql="select * from groups where groupno=$group_no";
     $res= mysqli_query($conn, $sql);
     $i=1;
     // $pdf->SetY(45);
@@ -268,9 +287,11 @@
         $y1 = $y1 + 50;
     }
 
-    $query = "select * from log_content where groupno =$group_no";
+    $query = "select * from log_content where ((groupno=$group_no and sem='$sem') and (division='$div_of' and year='$year_of')) and (aca_year='$aca_year' and dept='$dept')";
+    // $query="select * from groups where groupno=$group_no";
     $result = mysqli_query($conn, $query);
     
+    // Second page onwards (logs)
     while ($data = $result->fetch_assoc()) {
         $y2=50;
         $progress_planned = $data['progress_planned'];
@@ -279,7 +300,7 @@
         $date_of_log_sub = $data["date"];
         $log_no = $data["log_no"];
 
-        $sql_for_grps = "select * from groups g join userinfo u on g.student_id=u.username where groupno=$group_no";
+        $sql_for_grps = "select * from groups g join userinfo u on g.student_id=u.username where ((g.groupno=$group_no and g.sem='$sem') and (g.division='$div_of' and g.year='$year_of')) and (g.aca_year='$aca_year' and g.dept='$dept')";
         $res_for_grps = mysqli_query($conn, $sql_for_grps);
 
         $pdf->AddPage();
@@ -287,45 +308,12 @@
         $pdf->SetY($y2+2);
         $pdf->Cell(0,0,'Log No : ' . $log_no, 0, 1, 'L');
 
-        // $pdf->SetFont('Arial','B',15);
-        // $pdf->Line(10, $y2+8, 210-10, $y2+8);
-        // $pdf->SetY($y2+13);
-        // $pdf->Cell(0,0,'Progress Planned :', 0, 1, 'L');
-
-        // $pdf->SetFont('Arial','',13);
-        // $pdf->WordWrap($progress_planned,190);
-        // $pdf->SetY($y2+18);
-        // $pdf->Write(6,$progress_planned);
-        // $pdf->Line(10, $y2+58, 210-10, $y2+58);
-
-        // $pdf->SetFont('Arial','B',15);
-        // $pdf->SetY($y2+63);
-        // $pdf->Cell(0,0,'Progress Achieved :', 0, 1, 'L');
-
-        // $pdf->SetFont('Arial','',13);
-        // $pdf->WordWrap($progress_achieved,190);
-        // $pdf->SetY($y2+68);
-        // $pdf->Write(6,$progress_achieved);
-        // $pdf->Line(10, $y2+108, 210-10, $y2+108);
-
         $pdf->SetY($y2+8);
         $pdf->SetFont('Arial','B',15);
         $pdf->Cell(95,12,'Progress Planned', 'L T R', 0, 'L');
         $pdf->Cell(95,12,'Progress Achieved', 'L T R', 0, 'L');
 
         $pdf->SetFont('Arial','',15);
-        // 
-        // $pdf->SetY($y2+20);
-        // $pdf->Cell(95,100,'', 1, 0, 'L');
-        // $pdf->Cell(95,100,'', 1, 0, 'L');
-        // $pdf->Write(6,$progress_planned);
-
-        // $pdf->SetXY(105, $y2+20);
-        // $pdf->Write(6,$progress_achieved);
-
-        // for ($x = 0; $x <= $nb; $x++) {
-        //     $pdf->Cell(95,100,'', 1, 0, 'L');
-        // }
 
         $pdf->SetY($y2+20);
         $pdf->SetWidths(array(95, 95));
@@ -336,21 +324,15 @@
         
 
         $pdf->SetFont('Arial','B',15);
-        $pdf->Line(10, $y2+108, 210-10, $y2+108);
-        $pdf->SetY($y2+113);
+        // $pdf->Line(10, $y2+108, 210-10, $y2+108);
+        $pdf->SetY($y2+117);
         $pdf->Cell(0,0,'Guides Review :', 0, 1, 'L');
 
         $pdf->SetFont('Arial','',15);
         $pdf->WordWrap($guide_review,190);
-        $pdf->SetY($y2+118);
+        $pdf->SetY($y2+120);
         $pdf->Write(6,$guide_review);
         $pdf->Line(10, $y2+155, 210-10, $y2+155);
-
-        // $pdf->SetFont('Arial','',15);
-        // $guide_review_text='Guide Review : ' . $guide_review;
-        // $pdf->WordWrap($guide_review_text,190);
-        // $pdf->SetY($y2+125);
-        // $pdf->Write(6,$guide_review_text);
 
         $pdf->SetFont('Arial','B',15);
         $pdf->SetY($y2+160);
@@ -371,5 +353,6 @@
         }
 
     }
-    $pdf->Output();
+    $logbook_pdf_name='logbook_'.$dept.'_'.$year_of.'-'.$div_of.$group_no.'_Sem-'.$sem.'.pdf';
+    $pdf->Output('I', $logbook_pdf_name);
 ?>

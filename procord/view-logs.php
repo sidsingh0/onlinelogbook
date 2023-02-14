@@ -179,7 +179,7 @@
 
 <div class="container">
     <hr>
-    <button class="w-100 btn btn-info" onclick="window.open('/logbook_online/onlinelogbook/logbook-pdf.php?groupno=<?php echo $group_no; ?>', 'newwindow','width=1000,height=1000'); return false;">Get Log Book</button>
+    <button class="w-100 btn btn-info" onclick="window.open('/logbook_online/onlinelogbook/logbook-pdf.php?groupno=<?php echo $group_no; ?>&year=<?php echo $year_of; ?>&div=<?php echo $div_of; ?>&sem=<?php echo $sem; ?>&acayear=<?php echo $aca_year; ?>&dept=<?php echo $dept; ?>', 'newwindow','width=1000,height=1000'); return false;">Get Log Book</button>
     <hr>
           <h3 class="my-3">Log Details:</h3>                      
     <div>
