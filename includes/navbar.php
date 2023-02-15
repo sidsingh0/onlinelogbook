@@ -14,59 +14,59 @@
               if($_COOKIE["role"] == "proco"){
                 echo '
                   <li class="nav-item mx-1">
-                    <a class="nav-link" href="/logbook_online/onlinelogbook/procord/index.php">Add Logs</a>
+                    <a class="nav-link" href="/onlinelogbook/procord/index.php">Add Logs</a>
                   </li>
                   <li class="nav-item mx-1">
-                    <a class="nav-link" href="/logbook_online/onlinelogbook/procord/add-group.php">Add A Group</a>
+                    <a class="nav-link" href="/onlinelogbook/procord/add-group.php">Add A Group</a>
                   </li>
                   <li class="nav-item mx-1">
-                    <a class="nav-link" href="/logbook_online/onlinelogbook/procord/view-groups.php">My Groups</a>
+                    <a class="nav-link" href="/onlinelogbook/procord/view-groups.php">My Groups</a>
                   </li>
                   <li class="nav-item mx-1">
-                    <a class="nav-link" href="/logbook_online/onlinelogbook/procord/search.php" aria-current="page">Search</a>
+                    <a class="nav-link" href="/onlinelogbook/procord/search.php" aria-current="page">Search</a>
                   </li>
                   <li class="nav-item mx-1">
-                    <a class="nav-link" href="/logbook_online/onlinelogbook/procord/procord-view.php" aria-current="page">View All Groups</a>
+                    <a class="nav-link" href="/onlinelogbook/procord/procord-view.php" aria-current="page">View All Groups</a>
                   </li>
                 ';
               }
               if($_COOKIE["role"] == "admin"){
                 echo '
                 <li class="nav-item mx-1">
-                  <a class="nav-link" href="/logbook_online/onlinelogbook/admin/index.php" aria-current="page">Edit Faculties</a>
+                  <a class="nav-link" href="/onlinelogbook/admin/index.php" aria-current="page">Edit Faculties</a>
                 </li>
                 <li class="nav-item mx-1">
-                    <a class="nav-link" href="/logbook_online/onlinelogbook/admin/add-logs.php">Add Logs</a>
+                    <a class="nav-link" href="/onlinelogbook/admin/add-logs.php">Add Logs</a>
                   </li>
                 <li class="nav-item mx-1">
-                  <a class="nav-link" href="/logbook_online/onlinelogbook/admin/admin-view.php" aria-current="page">View all groups</a>
+                  <a class="nav-link" href="/onlinelogbook/admin/admin-view.php" aria-current="page">View all groups</a>
                 </li>
                 <li class="nav-item mx-1">
-                    <a class="nav-link" href="/logbook_online/onlinelogbook/admin/search.php" aria-current="page">Search</a>
+                    <a class="nav-link" href="/onlinelogbook/admin/search.php" aria-current="page">Search</a>
                 </li>
               ';
               }
               if($_COOKIE["role"] == "student"){
                 echo '
                 <li class="nav-item mx-1">
-                  <a class="nav-link" href="/logbook_online/onlinelogbook/student/index.php" aria-current="page">Home</a>
+                  <a class="nav-link" href="/onlinelogbook/student/index.php" aria-current="page">Home</a>
                 </li>
               ';
               }
               if($_COOKIE["role"] == "guide"){
                 echo '
                 <li class="nav-item mx-1">
-                  <a class="nav-link" href="/logbook_online/onlinelogbook/guide/index.php" aria-current="page">Home</a>
+                  <a class="nav-link" href="/onlinelogbook/guide/index.php" aria-current="page">Home</a>
                 </li>
 
                 <li class="nav-item mx-1">
-                  <a class="nav-link" href="/logbook_online/onlinelogbook/guide/add-group.php" aria-current="page">Add A Group</a>
+                  <a class="nav-link" href="/onlinelogbook/guide/add-group.php" aria-current="page">Add A Group</a>
                 </li>
               ';
               }
               ?>
               <li class="mx-1">
-                <a href="/logbook_online/onlinelogbook/logout.php?logout=true" class="btn btn-outline-info text-info-emphasis bg-info-subtle">Sign Out</a>
+                <a href="/onlinelogbook/logout.php?logout=true" class="btn btn-outline-info text-info-emphasis bg-info-subtle">Sign Out</a>
               </li>
             </ul>
           </div>

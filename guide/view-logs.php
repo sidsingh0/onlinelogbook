@@ -7,12 +7,12 @@
     $div_of=$_GET["div"];
     $sem=$_GET["sem"];
   }else{
-    header("Location: /logbook_online/onlinelogbook/guide/index.php");
+    header("Location: /onlinelogbook/guide/index.php");
     exit;
   }
 
 if ($_COOKIE['role'] != 'guide') {
-  header("Location: /logbook_online/onlinelogbook/logout.php?logout=true");
+  header("Location: /onlinelogbook/logout.php?logout=true");
 }
 
   //(groupno=$group_no and year='$year_of') and (division='$div_of')

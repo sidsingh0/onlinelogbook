@@ -4,7 +4,7 @@ include("./includes/conditions.php");
 if (isset($_GET["groupno"])) {
     $group_no = $_GET["groupno"];
 } else {
-    header("Location: /logbook_online/onlinelogbook/procord/procord-view.php");
+    header("Location: /onlinelogbook/procord/procord-view.php");
     exit;
 }
 ?>
@@ -47,7 +47,7 @@ if (isset($_GET["groupno"])) {
 <body>
 
     <div class="container">
-        <center><a href="/logbook_online/onlinelogbook/logbook-pdf.php?groupno=<?php echo $group_no; ?>" target="_blank" class=" w-75 btn btn-outline-info">Download</a></center>
+        <center><a href="/onlinelogbook/logbook-pdf.php?groupno=<?php echo $group_no; ?>" target="_blank" class=" w-75 btn btn-outline-info">Download</a></center>
         <div class="each-page">
             <hr style="height:2px;border-width:0;color:gray;background-color:gray">
             <center>

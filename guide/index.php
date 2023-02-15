@@ -2,7 +2,7 @@
 <?php
 include("../includes/conditions.php");
 if ($_COOKIE['role'] != 'guide') {
-    header("Location: /logbook_online/onlinelogbook/logout.php?logout=true");
+    header("Location: /onlinelogbook/logout.php?logout=true");
 }
 ?>
 <html lang="en" data-bs-theme="dark">
