@@ -2,7 +2,7 @@
 include("../includes/connect.php");
 include("../includes/conditions.php");
 if ($_COOKIE['role'] != 'admin') {
-  header("Location: /logbook_online/onlinelogbook/logout.php?logout=true");
+  header("Location: /diary/logbook/logout.php?logout=true");
 }
 
 ?>

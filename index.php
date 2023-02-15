@@ -116,7 +116,7 @@ body {
           setcookie("username", $username, time() + 3600);
           setcookie("role", $result["role"], time() + 3600);
           setcookie("token",get_token($username), time()+3600);
-          header("Location: /logbook_online/onlinelogbook/change-password.php");
+          header("Location: /diary/logbook/change-password.php");
         }
         else{
         if(password_verify($result["password"],$hash)){
@@ -124,7 +124,7 @@ body {
           setcookie("username", $username, time() + 3600);
           setcookie("role", $result["role"], time() + 3600);
           setcookie("token",get_token($username), time()+3600);
-          header("Location: /logbook_online/onlinelogbook/check-user.php");
+          header("Location: /diary/logbook/check-user.php");
         }else{
           $msg = "Password is Incorrect";
         }

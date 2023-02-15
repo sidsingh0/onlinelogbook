@@ -3,16 +3,16 @@ include("./includes/conditions.php");
 if(isset($_COOKIE["role"])){
     $role = $_COOKIE["role"];
     if($role == "student"){
-        header("Location: /logbook_online/onlinelogbook/student/index.php");
+        header("Location: /diary/logbook/student/index.php");
     }else if($role == "guide"){
-        header("Location: /logbook_online/onlinelogbook/guide/index.php");
+        header("Location: /diary/logbook/guide/index.php");
     }else if($role == "proco"){
-        header("Location: /logbook_online/onlinelogbook/procord/index.php");
+        header("Location: /diary/logbook/procord/index.php");
     }else if($role == "admin"){
-        header("Location: /logbook_online/onlinelogbook/admin/index.php");
+        header("Location: /diary/logbook/admin/index.php");
     }
 }else{
-    header("Location: /logbook_online/onlinelogbook/index.php");
+    header("Location: /diary/logbook/index.php");
 }
 
 ?>

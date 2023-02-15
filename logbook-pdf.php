@@ -10,7 +10,7 @@
         $dept=$_GET["dept"];
     }
     else{
-        header("Location: /logbook_online/onlinelogbook/procord/view-logs.php");
+        header("Location: /diary/logbook/procord/view-logs.php");
         exit;
     }
     require('fpdf.php');

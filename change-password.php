@@ -5,7 +5,7 @@
   $sql = "select * from users where username = $username";
   $result = mysqli_query($conn, $sql)->fetch_assoc();
   if ($result['password']!='1234'){
-    header("Location: /logbook_online/onlinelogbook/check-user.php");
+    header("Location: /diary/logbook/check-user.php");
   }
 ?>
 <html lang="en" data-bs-theme="dark">
@@ -117,7 +117,7 @@ body {
         $hash = password_hash($npass,PASSWORD_DEFAULT);
         $sql = "update users set password='$hash' where username = $username";
         $result = mysqli_query($conn, $sql);
-        header("Location: /logbook_online/onlinelogbook/check-user.php");
+        header("Location: /diary/logbook/check-user.php");
       }else{
         $msg = "Passwords do not match.";
       }

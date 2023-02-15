@@ -3,7 +3,7 @@
 
     include("../includes/conditions.php");
     if ($_COOKIE['role']!='student'){
-        header("Location: /logbook_online/onlinelogbook/logout.php?logout=true");
+        header("Location: /diary/logbook/logout.php?logout=true");
     }
 ?>
 <html lang="en" data-bs-theme="dark">
@@ -39,7 +39,7 @@
                 $semester = $_POST["sem"];
                 $logno = $_POST["log"];
             }else{
-                header("Location: /logbook_online/onlinelogbook/student/index.php");
+                header("Location: /diary/logbook/student/index.php");
             }
         }else{
             if (isset($_POST['button_submit'])){
@@ -59,11 +59,11 @@
                     $query= "insert into log_content (sem,groupno,log_no,progress_planned,progress_achieved,date,year,division,dept) values ('$sem',$groupno,$logno,'$plannedprog','$achievedprog','$date', '$year','$division','$dept')";
                     $result= mysqli_query($conn,$query) or die(mysqli_error($conn));
                     if($result){
-                        echo " <script>window.location = '/logbook_online/onlinelogbook/student/index.php'</script>";
+                        echo " <script>window.location = '/diary/logbook/student/index.php'</script>";
                     }
                 }
             }else{
-                header("Location: /logbook_online/onlinelogbook/student/index.php");
+                header("Location: /diary/logbook/student/index.php");
             }
         }
         

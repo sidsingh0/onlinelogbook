@@ -1,7 +1,7 @@
 <?php 
 session_start();
 include('connect.php');
-$api_url = 'http://localhost/logbook_online/onlinelogbook/api_hidden_url/we_need_name.php?u=20102125';
+$api_url = '/diary/logbook/api_hidden_url/we_need_name.php?u=20102125';
 $json_data = file_get_contents($api_url);
 $response_data = json_decode($json_data);
 $dept = $response_data->dept;
@@ -26,13 +26,13 @@ if(isset($_COOKIE["username"])){
     if($_COOKIE["role"] == $dbrole){
         $role = $_COOKIE["role"];
     }else{
-        header("Location: /logbook_online/onlinelogbook/logout.php?logout=true");
+        header("Location: /diary/logbook/logout.php?logout=true");
     }
     if ($token==$_COOKIE['token']){}
     else{
-        header("Location: /logbook_online/onlinelogbook/logout.php?logout=true");
+        header("Location: /diary/logbook/logout.php?logout=true");
     }
 }else{
-    header("Location: /logbook_online/onlinelogbook/index.php");
+    header("Location: /diary/logbook/index.php");
 }
 ?>
