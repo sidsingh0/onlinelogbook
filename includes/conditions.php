@@ -1,7 +1,7 @@
 <?php 
 session_start();
 include('connect.php');
-$api_url = 'http://localhost/onlinelogbook/api_hidden_url/we_need_name.php?u=20102125';
+$api_url = '/onlinelogbook/api_hidden_url/we_need_name.php?u=20102125';
 $json_data = file_get_contents($api_url);
 $response_data = json_decode($json_data);
 $dept = $response_data->dept;
