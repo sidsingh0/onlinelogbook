@@ -25,13 +25,13 @@
     $div_of=$_GET["div"];
     $sem=$_GET["sem"];
   }else{
-    header("Location: /onlinelogbook/procord/procord-view.php");
+    header("Location: /diary/logbook/procord/procord-view.php");
     exit;
   }
   if($_COOKIE["role"] == "proco"){
     $role = $_COOKIE["role"];
   }else{
-    header("Location: /onlinelogbook/logout.php?logout=true");
+    header("Location: /diary/logbook/logout.php?logout=true");
   }
   if(isset($_POST["log_id"])){
     $log_id = $_POST["log_id"];
@@ -179,7 +179,7 @@
 
 <div class="container">
     <hr>
-    <button class="w-100 btn btn-info" onclick="window.open('/onlinelogbook/logbook-pdf.php?groupno=<?php echo $group_no; ?>&year=<?php echo $year_of; ?>&div=<?php echo $div_of; ?>&sem=<?php echo $sem; ?>&acayear=<?php echo $aca_year; ?>&dept=<?php echo $dept; ?>', 'newwindow','width=1000,height=1000'); return false;">Get Log Book</button>
+    <button class="w-100 btn btn-info" onclick="window.open('/diary/logbook/logbook-pdf.php?groupno=<?php echo $group_no; ?>&year=<?php echo $year_of; ?>&div=<?php echo $div_of; ?>&sem=<?php echo $sem; ?>&acayear=<?php echo $aca_year; ?>&dept=<?php echo $dept; ?>', 'newwindow','width=1000,height=1000'); return false;">Get Log Book</button>
     <hr>
           <h3 class="my-3">Log Details:</h3>                      
     <div>

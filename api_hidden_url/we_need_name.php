@@ -19,6 +19,6 @@
         }
         echo json_encode($data, JSON_FORCE_OBJECT);
     }else{
-        header("/onlinelogbook/index.php");
+        header("/diary/logbook/index.php");
     }
 ?>

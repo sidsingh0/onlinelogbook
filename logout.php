@@ -6,7 +6,7 @@
       setcookie("role", '', time() - 3600);
       setcookie("token", '', time() - 3600);
       session_destroy();
-      header("Location: /onlinelogbook/index.php");
+      header("Location: /diary/index.php");
     }
   }
 ?>

@@ -4,7 +4,7 @@
   if($_COOKIE["role"] == "proco" || $_COOKIE["role"] == "admin"){
     $role = $_COOKIE["role"];
   }else{
-    header("Location: /onlinelogbook/logout.php?logout=true");
+    header("Location: /diary/logbook/logout.php?logout=true");
   }
 ?>
 <!DOCTYPE html>
@@ -213,7 +213,7 @@
             let curr = $(this);
             $.ajax({
                     type: "GET",
-                    url:'/onlinelogbook/api_hidden_url/we_need_name.php?u='+this.value,
+                    url:'/diary/logbook/api_hidden_url/we_need_name.php?u='+this.value,
                     success: function(response) {
                         response = JSON.stringify(response);
                         response = JSON.parse(response);

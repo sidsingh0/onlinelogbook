@@ -4,7 +4,7 @@
   if($_COOKIE["role"] == "admin"){
     $role = $_COOKIE["role"];
   }else{
-    header("Location: /onlinelogbook/logout.php?logout=true");
+    header("Location: /diary/logbook/logout.php?logout=true");
   }
 ?>
 <!DOCTYPE html>
